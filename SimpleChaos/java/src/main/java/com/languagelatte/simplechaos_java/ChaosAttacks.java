@@ -4,11 +4,11 @@ public interface ChaosAttacks {
 
   public void exception();
 
-  // public void specificException(Exception e);
-  // public void error();
-  // public void specificError(Error e);
-  // public void jvmCrash();
-  // public void latency();
+  //public void specificException(Exception e);
+  public void error();
+  //public void specificError(Error e);
+  public void jvmCrash();
+  public void latency();
   // public void highCPU();
   // public void highMemory();
   // public void highDisk();
