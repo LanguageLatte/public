@@ -71,4 +71,11 @@ public class ChaosSpringPropertiesImpl implements ChaosProperties {
       }
     }
   }
+
+  @Override
+  public Integer getIntProperty(String key) {
+    return isValidPropertyValue(key, environment.getProperty(key))
+        ? Integer.valueOf(environment.getProperty(key))
+        : Integer.valueOf(properties.get(key));
+  }
 }

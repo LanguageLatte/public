@@ -5,8 +5,6 @@ import java.util.Properties;
 
 public interface ChaosProperties {
 
-
-
   // Load from system properties
   public void loadProperties();
 
@@ -17,6 +15,8 @@ public interface ChaosProperties {
   public Boolean getBooleanProperty(String key);
 
   public Double getDoubleProperty(String key);
+
+  public Integer getIntProperty(String key);
 
   default Boolean isValidPropertyValue(String key, String value) {
 

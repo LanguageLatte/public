@@ -12,10 +12,26 @@ public class ChaosService implements ChaosAttacks {
 
   public ChaosService(ChaosSpringPropertiesImpl chaosProperties) {
     this.randomChaosAttacks = new RandomChaosAttacks(chaosProperties);
+    this.chaosProperties = chaosProperties;
   }
 
   @Override
   public void exception() {
     randomChaosAttacks.exception();
+  }
+
+  @Override
+  public void error() {
+    randomChaosAttacks.error();
+  }
+
+  @Override
+  public void jvmCrash() {
+    randomChaosAttacks.jvmCrash();
+  }
+
+  @Override
+  public void latency() {
+    randomChaosAttacks.latency();
   }
 }

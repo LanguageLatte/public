@@ -57,4 +57,9 @@ public class ChaosPropertiesDefaultImpl implements ChaosProperties {
   public Double getDoubleProperty(String key) {
     return Double.valueOf(properties.get(key));
   }
+
+  @Override
+  public Integer getIntProperty(String key) {
+    return Integer.valueOf(properties.get(key));
+  }
 }

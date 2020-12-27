@@ -2,10 +2,15 @@ package com.languagelatte.simplechaos_java.attacks;
 
 import com.languagelatte.simplechaos_java.ChaosProperties;
 
-public class ExceptionAttack implements Attack {
+public class JvmCrashAttack implements Attack {
 
   @Override
   public void attack(ChaosProperties properties) {
-    throw new RuntimeException("Chaos Attack Exception");
+
+    try {
+      System.exit(1);
+    } catch (Exception e) {
+
+    }
   }
 }

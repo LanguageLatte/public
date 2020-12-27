@@ -47,7 +47,7 @@
                         <arg>-Xlint:-processing</arg>
                         <arg>-Werror</arg>
                         <arg>-XDcompilePolicy=simple</arg>
-                        <arg>-Xplugin:ErrorProne -Xep:NullAway:ERROR -XepOpt:NullAway:AnnotatedPackages=com.mike</arg>
+                        <arg>-Xplugin:ErrorProne -Xep:NullAway:ERROR -XepOpt:NullAway:AnnotatedPackages=com.languagelatte</arg>
 
                     </compilerArgs>
                 </configuration>
