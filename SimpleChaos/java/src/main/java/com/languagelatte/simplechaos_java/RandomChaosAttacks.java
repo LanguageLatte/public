@@ -5,6 +5,8 @@ import com.languagelatte.simplechaos_java.attacks.ErrorAttack;
 import com.languagelatte.simplechaos_java.attacks.ExceptionAttack;
 import com.languagelatte.simplechaos_java.attacks.JvmCrashAttack;
 import com.languagelatte.simplechaos_java.attacks.LatencyAttack;
+import com.languagelatte.simplechaos_java.reports.ConsoleLogReporter;
+import com.languagelatte.simplechaos_java.reports.Reporter;
 import java.util.Map;
 import java.util.Properties;
 
@@ -16,6 +18,7 @@ public class RandomChaosAttacks implements ChaosAttacks {
   // 4. Is the specific method Enabled?
   // 5. Id the random number <= than the chance?
 
+  Reporter reporter;
   ChaosProperties properties;
   Attack exception;
   Attack latency;
@@ -29,6 +32,7 @@ public class RandomChaosAttacks implements ChaosAttacks {
     this.jvmCrash = new JvmCrashAttack();
     this.properties = new ChaosPropertiesDefaultImpl();
     this.properties.loadProperties();
+    this.reporter = new ConsoleLogReporter();
   }
 
   public RandomChaosAttacks(ChaosProperties chaosProperties) {
@@ -38,6 +42,7 @@ public class RandomChaosAttacks implements ChaosAttacks {
     this.jvmCrash = new JvmCrashAttack();
     this.properties = chaosProperties;
     this.properties.loadProperties();
+    this.reporter = new ConsoleLogReporter();
   }
 
   public RandomChaosAttacks(Map<String, String> properties) {
@@ -47,6 +52,7 @@ public class RandomChaosAttacks implements ChaosAttacks {
     this.jvmCrash = new JvmCrashAttack();
     this.properties = new ChaosPropertiesDefaultImpl();
     this.properties.loadProperties(properties);
+    this.reporter = new ConsoleLogReporter();
   }
 
   public RandomChaosAttacks(Properties properties) {
@@ -56,6 +62,7 @@ public class RandomChaosAttacks implements ChaosAttacks {
     this.jvmCrash = new JvmCrashAttack();
     this.properties = new ChaosPropertiesDefaultImpl();
     this.properties.loadProperties(properties);
+    this.reporter = new ConsoleLogReporter();
   }
 
   // public RandomChaosAttacks(Attack exception) {
@@ -73,6 +80,7 @@ public class RandomChaosAttacks implements ChaosAttacks {
     }
     if (Math.random()
         > 1 - properties.getDoubleProperty(SimpleChaosConstants.RANDOM_CHAOS_EXCEPTION_CHANCE)) {
+      reporter.reportAttack(ChaosAttack.EXCEPTION, true);
       exception.attack(properties);
     }
   }
@@ -88,6 +96,7 @@ public class RandomChaosAttacks implements ChaosAttacks {
     }
     if (Math.random()
         > 1 - properties.getDoubleProperty(SimpleChaosConstants.RANDOM_CHAOS_ERROR_CHANCE)) {
+      reporter.reportAttack(ChaosAttack.ERROR, true);
       exception.attack(properties);
     }
   }
@@ -103,6 +112,7 @@ public class RandomChaosAttacks implements ChaosAttacks {
     }
     if (Math.random()
         > 1 - properties.getDoubleProperty(SimpleChaosConstants.RANDOM_CHAOS_JVMCRASH_CHANCE)) {
+      reporter.reportAttack(ChaosAttack.JVMCRASH, true);
       exception.attack(properties);
     }
   }
@@ -118,6 +128,7 @@ public class RandomChaosAttacks implements ChaosAttacks {
     }
     if (Math.random()
         > 1 - properties.getDoubleProperty(SimpleChaosConstants.RANDOM_CHAOS_LATENCY_CHANCE)) {
+      reporter.reportAttack(ChaosAttack.LATENCY, true);
       exception.attack(properties);
     }
   }
