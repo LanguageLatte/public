@@ -1,14 +1,12 @@
-package com.languagelatte.simplechaos_java;
+package com.languagelatte.simplechaos;
 
-import com.languagelatte.simplechaos_java.attacks.Attack;
-import com.languagelatte.simplechaos_java.attacks.ErrorAttack;
-import com.languagelatte.simplechaos_java.attacks.ExceptionAttack;
-import com.languagelatte.simplechaos_java.attacks.JvmCrashAttack;
-import com.languagelatte.simplechaos_java.attacks.LatencyAttack;
-import com.languagelatte.simplechaos_java.reports.ConsoleLogReporter;
-import com.languagelatte.simplechaos_java.reports.Reporter;
-import java.util.Map;
-import java.util.Properties;
+import com.languagelatte.simplechaos.attacks.Attack;
+import com.languagelatte.simplechaos.attacks.ErrorAttack;
+import com.languagelatte.simplechaos.attacks.ExceptionAttack;
+import com.languagelatte.simplechaos.attacks.JvmCrashAttack;
+import com.languagelatte.simplechaos.attacks.LatencyAttack;
+import com.languagelatte.simplechaos.reports.ConsoleLogReporter;
+import com.languagelatte.simplechaos.reports.Reporter;
 
 public class RandomChaosAttacks implements ChaosAttacks {
 
@@ -44,30 +42,6 @@ public class RandomChaosAttacks implements ChaosAttacks {
     this.properties.loadProperties();
     this.reporter = new ConsoleLogReporter();
   }
-
-  public RandomChaosAttacks(Map<String, String> properties) {
-    this.exception = new ExceptionAttack();
-    this.error = new ErrorAttack();
-    this.latency = new LatencyAttack();
-    this.jvmCrash = new JvmCrashAttack();
-    this.properties = new ChaosPropertiesDefaultImpl();
-    this.properties.loadProperties(properties);
-    this.reporter = new ConsoleLogReporter();
-  }
-
-  public RandomChaosAttacks(Properties properties) {
-    this.exception = new ExceptionAttack();
-    this.error = new ErrorAttack();
-    this.latency = new LatencyAttack();
-    this.jvmCrash = new JvmCrashAttack();
-    this.properties = new ChaosPropertiesDefaultImpl();
-    this.properties.loadProperties(properties);
-    this.reporter = new ConsoleLogReporter();
-  }
-
-  // public RandomChaosAttacks(Attack exception) {
-  //   this.exception = exception;
-  // }
 
   @Override
   public void exception() {

@@ -1,10 +1,14 @@
-package com.languagelatte.simplechaos_java.attacks;
+package com.languagelatte.simplechaos.attacks;
 
-import com.languagelatte.simplechaos_java.ChaosProperties;
-import com.languagelatte.simplechaos_java.SimpleChaosConstants;
+import com.languagelatte.simplechaos.ChaosProperties;
+import com.languagelatte.simplechaos.SimpleChaosConstants;
 import java.util.Random;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LatencyAttack implements Attack {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(LatencyAttack.class);
 
   @Override
   public void attack(ChaosProperties properties) {
@@ -14,9 +18,10 @@ public class LatencyAttack implements Attack {
     int latency = r.nextInt(max - min) + min;
 
     try {
+      LOGGER.info("Starting Latency Attack. Will run for " + latency + "milliseconds");
       Thread.sleep((long) latency);
     } catch (Exception e) {
-
+      LOGGER.info("Latency Attack was intrupted.");
     }
   }
 }

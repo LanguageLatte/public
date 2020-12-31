@@ -1,9 +1,8 @@
-package com.languagelatte.simplechaos_java;
+package com.languagelatte.simplechaos;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Properties;
 
 public class ChaosPropertiesDefaultImpl implements ChaosProperties {
 
@@ -25,28 +24,28 @@ public class ChaosPropertiesDefaultImpl implements ChaosProperties {
     }
   }
 
-  @Override
-  public void loadProperties(Map<String, String> properties) {
-    loadProperties();
+  // @Override
+  // public void loadProperties(Map<String, String> properties) {
+  //   loadProperties();
 
-    for (Entry<String, String> e : properties.entrySet()) {
-      if (isValidPropertyValue(e.getKey(), e.getValue())) {
-        this.properties.put(e.getKey(), e.getValue());
-      }
-    }
-  }
+  //   for (Entry<String, String> e : properties.entrySet()) {
+  //     if (isValidPropertyValue(e.getKey(), e.getValue())) {
+  //       this.properties.put(e.getKey(), e.getValue());
+  //     }
+  //   }
+  // }
 
-  @Override
-  public void loadProperties(Properties properties) {
-    loadProperties();
+  // @Override
+  // public void loadProperties(Properties properties) {
+  //   loadProperties();
 
-    for (Entry<Object, Object> e : properties.entrySet()) {
+  //   for (Entry<Object, Object> e : properties.entrySet()) {
 
-      if (isValidPropertyValue(e.getKey().toString(), e.getValue().toString())) {
-        this.properties.put(e.getKey().toString(), e.getValue().toString());
-      }
-    }
-  }
+  //     if (isValidPropertyValue(e.getKey().toString(), e.getValue().toString())) {
+  //       this.properties.put(e.getKey().toString(), e.getValue().toString());
+  //     }
+  //   }
+  // }
 
   @Override
   public Boolean getBooleanProperty(String key) {

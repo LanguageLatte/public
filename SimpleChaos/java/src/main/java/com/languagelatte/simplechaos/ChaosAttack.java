@@ -1,4 +1,4 @@
-package com.languagelatte.simplechaos_java;
+package com.languagelatte.simplechaos;
 
 public enum ChaosAttack {
   EXCEPTION,

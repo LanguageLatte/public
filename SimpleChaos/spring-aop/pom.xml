@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.languagelatte</groupId>
-    <artifactId>simple-chaos-spring</artifactId>
+    <artifactId>simple-chaos-spring-aop</artifactId>
     <version>0.0.2</version>
     <packaging>jar</packaging>
     <properties>
@@ -99,9 +99,24 @@
             <version>0.0.2</version>
         </dependency>
         <dependency>
+            <groupId>com.languagelatte</groupId>
+            <artifactId>simple-chaos-spring</artifactId>
+            <version>0.0.2</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>5.2.12.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.9.4</version>
         </dependency>
         <dependency>
             <groupId>org.immutables</groupId>

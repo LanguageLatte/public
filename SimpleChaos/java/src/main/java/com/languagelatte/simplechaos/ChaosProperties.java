@@ -1,16 +1,13 @@
-package com.languagelatte.simplechaos_java;
-
-import java.util.Map;
-import java.util.Properties;
+package com.languagelatte.simplechaos;
 
 public interface ChaosProperties {
 
   // Load from system properties
   public void loadProperties();
 
-  public void loadProperties(Map<String, String> properties);
+  // public void loadProperties(Map<String, String> properties);
 
-  public void loadProperties(Properties properties);
+  // public void loadProperties(Properties properties);
 
   public Boolean getBooleanProperty(String key);
 

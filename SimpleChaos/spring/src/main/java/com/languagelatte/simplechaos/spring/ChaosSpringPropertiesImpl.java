@@ -1,11 +1,10 @@
-package com.languagelatte.simplechaos_spring;
+package com.languagelatte.simplechaos.spring;
 
-import com.languagelatte.simplechaos_java.ChaosProperties;
-import com.languagelatte.simplechaos_java.SimpleChaosConstants;
+import com.languagelatte.simplechaos.ChaosProperties;
+import com.languagelatte.simplechaos.SimpleChaosConstants;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Properties;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -45,29 +44,6 @@ public class ChaosSpringPropertiesImpl implements ChaosProperties {
         this.properties.put(entry.getKey(), systemValue);
       } else {
         this.properties.put(entry.getKey(), entry.getValue());
-      }
-    }
-  }
-
-  @Override
-  public void loadProperties(Map<String, String> properties) {
-    loadProperties();
-
-    for (Entry<String, String> e : properties.entrySet()) {
-      if (isValidPropertyValue(e.getKey(), e.getValue())) {
-        this.properties.put(e.getKey(), e.getValue());
-      }
-    }
-  }
-
-  @Override
-  public void loadProperties(Properties properties) {
-    loadProperties();
-
-    for (Entry<Object, Object> e : properties.entrySet()) {
-
-      if (isValidPropertyValue(e.getKey().toString(), e.getValue().toString())) {
-        this.properties.put(e.getKey().toString(), e.getValue().toString());
       }
     }
   }

@@ -1,5 +1,5 @@
-import com.languagelatte.simplechaos_java.RandomChaosAttacks;
-import com.languagelatte.simplechaos_java.SimpleChaosConstants;
+import com.languagelatte.simplechaos.RandomChaosAttacks;
+import com.languagelatte.simplechaos.SimpleChaosConstants;
 import org.junit.Test;
 
 public class Test1 {

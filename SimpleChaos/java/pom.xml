@@ -2,17 +2,17 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.languagelatte</groupId>
     <artifactId>simple-chaos-java</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2</version>
     <packaging>jar</packaging>
     <properties>
-        <maven.compiler.source>15</maven.compiler.source>
-        <maven.compiler.target>15</maven.compiler.target>
-        <maven.compiler.release>15</maven.compiler.release>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <formatter.goal>format</formatter.goal>
     </properties>
 
-
+    
     <build>
         <plugins>
             <plugin>
@@ -21,9 +21,9 @@
                 <version>3.8.1</version>
                 <configuration>
                     <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                    <release>15</release>
-                    <source>15</source>
-                    <target>15</target>
+                    <release>11</release>
+                    <source>11</source>
+                    <target>11</target>
                     <showWarnings>true</showWarnings>
                     <annotationProcessorPaths>
                         <path>
@@ -71,8 +71,33 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <id>attach-sources</id>
+                    <goals>
+                      <goal>jar</goal>
+                    </goals>
+                  </execution>
+                </executions>
+              </plugin>
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <id>attach-javadocs</id>
+                    <goals>
+                      <goal>jar</goal>
+                    </goals>
+                  </execution>
+                </executions>
+              </plugin>
         </plugins>
-    </build>
+    </build> 
+    
 
 
     <dependencyManagement>
@@ -93,6 +118,11 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
         <dependency>
             <groupId>org.immutables</groupId>
             <artifactId>value</artifactId>
@@ -118,4 +148,11 @@
             </properties>
         </profile>
     </profiles>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-repo-maven-example</id>
+            <url>https://api.bintray.com/maven/languagelatte/languagelatte/com.languagelatte.simplechaos_java/;publish=1</url>
+        </repository>
+      </distributionManagement>
 </project>
