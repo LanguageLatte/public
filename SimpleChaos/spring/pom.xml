@@ -95,7 +95,7 @@
     <dependencies>
         <dependency>
             <groupId>com.languagelatte</groupId>
-            <artifactId>simple-chaos-java</artifactId>
+            <artifactId>simple-chaos</artifactId>
             <version>0.0.2</version>
         </dependency>
         <dependency>

@@ -1,7 +1,7 @@
 package com.languagelatte.simplechaos.spring;
 
-import com.languagelatte.simplechaos.ChaosProperties;
-import com.languagelatte.simplechaos.SimpleChaosConstants;
+import com.languagelatte.simplechaos.properties.ChaosProperties;
+import com.languagelatte.simplechaos.properties.SimpleChaosConstants;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -53,5 +53,12 @@ public class ChaosSpringPropertiesImpl implements ChaosProperties {
     return isValidPropertyValue(key, environment.getProperty(key))
         ? Integer.valueOf(environment.getProperty(key))
         : Integer.valueOf(properties.get(key));
+  }
+
+  @Override
+  public String getStringProperty(String key) {
+    return isValidPropertyValue(key, environment.getProperty(key))
+        ? String.valueOf(environment.getProperty(key))
+        : String.valueOf(properties.get(key));
   }
 }
