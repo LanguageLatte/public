@@ -41,18 +41,21 @@ public class SimpleChaosSpringAspect {
   @Pointcut("within(@org.springframework.stereotype.Service *)")
   public void classAnnotatedWithService() {}
 
+  @Pointcut("within(@org.springframework.stereotype.Repository *)")
+  public void classAnnotatedWithRepository() {}
+
+  @Pointcut("within(@org.springframework.stereotype.Controller *)")
+  public void classAnnotatedWithController() {}
+
+  @Pointcut("within(@org.springframework.stereotype.Component *)")
+  public void classAnnotatedWithComponent() {}
+
   @Around(
       "publicMethodNonFinalNonEnumClass() "
           + "&& classAnnotatedWithService() "
           + "&& !classInSpringPackage() "
           + "&& !classInSimpleChaosPackage()")
   public Object serviceIntercept(ProceedingJoinPoint pjp) throws Throwable {
-    LOGGER.info("Inside SimpleChaos Spring Service Aspect OUTSIDE IF STATEMENT");
-    LOGGER.info(
-        chaosProperties
-            .getBooleanProperty("com.languagelatte.simplechaos.spring.aop.service.enabled")
-            .toString());
-
     if ("true"
         .equals(
             environment.getProperty("com.languagelatte.simplechaos.spring.aop.service.enabled"))) {

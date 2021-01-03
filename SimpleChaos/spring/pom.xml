@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.languagelatte</groupId>
     <artifactId>simple-chaos-spring</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <packaging>jar</packaging>
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -71,6 +71,30 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <id>attach-sources</id>
+                    <goals>
+                      <goal>jar</goal>
+                    </goals>
+                  </execution>
+                </executions>
+              </plugin>
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <id>attach-javadocs</id>
+                    <goals>
+                      <goal>jar</goal>
+                    </goals>
+                  </execution>
+                </executions>
+              </plugin>
         </plugins>
     </build>
 
@@ -96,7 +120,7 @@
         <dependency>
             <groupId>com.languagelatte</groupId>
             <artifactId>simple-chaos</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.3</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -128,4 +152,10 @@
             </properties>
         </profile>
     </profiles>
+    <distributionManagement>
+        <repository>
+            <id>bintray-repo-maven-example</id>
+            <url>https://api.bintray.com/maven/languagelatte/languagelatte/com.languagelatte.simplechaos.spring/;publish=1</url>
+        </repository>
+      </distributionManagement>
 </project>
