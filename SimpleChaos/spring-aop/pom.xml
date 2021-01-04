@@ -30,9 +30,8 @@
     </scm>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <maven.compiler.release>11</maven.compiler.release>
+        <java.version>15</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <formatter.goal>format</formatter.goal>
     </properties>
@@ -46,9 +45,6 @@
                 <version>3.8.1</version>
                 <configuration>
                     <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                    <release>11</release>
-                    <source>11</source>
-                    <target>11</target>
                     <showWarnings>true</showWarnings>
                     <annotationProcessorPaths>
                         <path>
@@ -184,6 +180,18 @@
             <id>formatter</id>
             <properties>
                 <formatter.goal>check</formatter.goal>
+            </properties>
+        </profile>
+        <profile>
+            <id>Java-8</id>
+            <properties>
+                <java.version>8</java.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>Java-11</id>
+            <properties>
+                <java.version>11</java.version>
             </properties>
         </profile>
     </profiles>
