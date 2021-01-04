@@ -2,10 +2,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.languagelatte</groupId>
     <artifactId>simple-chaos</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <packaging>jar</packaging>
 
-    <name>SimpleChaos</name>
+    <name>Simple Chaos</name>
     <description>A project to introduce chaos testing into your java applications</description>
     <url>https://github.com/LanguageLatte/public</url>
     <licenses>

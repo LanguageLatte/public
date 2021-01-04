@@ -2,8 +2,33 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.languagelatte</groupId>
     <artifactId>simple-chaos-spring</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.5</version>
     <packaging>jar</packaging>
+
+    <name>Simple Chaos Spring</name>
+    <description>A Spring extension of the Spimple Chaos poject to introduce chaos testing into your Spring applications</description>
+    <url>https://github.com/LanguageLatte/public</url>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://choosealicense.com/licenses/mit/</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Michael Nolan</name>
+            <email>https://github.com/LanguageLatte/public</email>
+            <organization>LanguageLatte</organization>
+            <organizationUrl>https://github.com/LanguageLatte/public</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://github.com/LanguageLatte/public.git</connection>
+        <developerConnection>scm:git:https://github.com/LanguageLatte/public.git</developerConnection>
+        <url>https://github.com/LanguageLatte/public</url>
+    </scm>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
