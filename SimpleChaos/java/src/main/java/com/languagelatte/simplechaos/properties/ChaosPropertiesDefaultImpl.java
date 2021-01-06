@@ -2,16 +2,19 @@ package com.languagelatte.simplechaos.properties;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ChaosPropertiesDefaultImpl implements ChaosProperties {
 
   private final Map<String, String> properties = new HashMap<>();
+  private static final Logger LOGGER = LoggerFactory.getLogger(ChaosPropertiesDefaultImpl.class);
 
   @Override
   public void loadProperties() {
 
-    for (Entry<String, String> entry : SimpleChaosConstants.defaultValueMap.entrySet()) {
+    for (Map.Entry<String, String> entry : SimpleChaosConstants.defaultValueMap.entrySet()) {
 
       String systemValue = System.getProperty(entry.getKey());
 
@@ -25,25 +28,25 @@ public class ChaosPropertiesDefaultImpl implements ChaosProperties {
 
   // @Override
   // public void loadProperties(Map<String, String> properties) {
-  //   loadProperties();
+  // loadProperties();
 
-  //   for (Entry<String, String> e : properties.entrySet()) {
-  //     if (isValidPropertyValue(e.getKey(), e.getValue())) {
-  //       this.properties.put(e.getKey(), e.getValue());
-  //     }
-  //   }
+  // for (Entry<String, String> e : properties.entrySet()) {
+  // if (isValidPropertyValue(e.getKey(), e.getValue())) {
+  // this.properties.put(e.getKey(), e.getValue());
+  // }
+  // }
   // }
 
   // @Override
   // public void loadProperties(Properties properties) {
-  //   loadProperties();
+  // loadProperties();
 
-  //   for (Entry<Object, Object> e : properties.entrySet()) {
+  // for (Entry<Object, Object> e : properties.entrySet()) {
 
-  //     if (isValidPropertyValue(e.getKey().toString(), e.getValue().toString())) {
-  //       this.properties.put(e.getKey().toString(), e.getValue().toString());
-  //     }
-  //   }
+  // if (isValidPropertyValue(e.getKey().toString(), e.getValue().toString())) {
+  // this.properties.put(e.getKey().toString(), e.getValue().toString());
+  // }
+  // }
   // }
 
   @Override
@@ -63,7 +66,6 @@ public class ChaosPropertiesDefaultImpl implements ChaosProperties {
 
   @Override
   public String getStringProperty(String key) {
-    // Dirty hack to prevent nullaway from complaining.
     return String.valueOf(properties.get(key));
   }
 }

@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,7 @@ public class ConsoleLogReporter implements Reporter {
   private static final Logger LOGGER = LoggerFactory.getLogger(ConsoleLogReporter.class);
 
   @Override
-  public void reportAttack(ChaosAttack chaosAttack, Boolean wasRunSucessfully) {
+  public void reportAttack(ChaosAttack chaosAttack) {
 
     if (totalAttackCount.get(chaosAttack) == null) {
       totalAttackCount.put(chaosAttack, 1);
@@ -41,7 +40,7 @@ public class ConsoleLogReporter implements Reporter {
     LOGGER.info("Attack Report for " + startTime.toString() + " to " + currentTime.toString());
     LOGGER.info("Total attacks = " + totalAttackCount.size());
 
-    for (Entry<ChaosAttack, Integer> attack : totalAttackCount.entrySet()) {
+    for (Map.Entry<ChaosAttack, Integer> attack : totalAttackCount.entrySet()) {
       LOGGER.info(
           "Total Attacks - Attack Type: " + attack.getKey() + " Count: " + attack.getValue());
     }

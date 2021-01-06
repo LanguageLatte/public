@@ -2,9 +2,16 @@ package com.languagelatte.simplechaos.spring;
 
 import com.languagelatte.simplechaos.properties.ChaosProperties;
 import com.languagelatte.simplechaos.properties.SimpleChaosConstants;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +20,7 @@ public class ChaosSpringPropertiesImpl implements ChaosProperties {
 
   private final Environment environment;
   private final Map<String, String> properties = new HashMap<>();
+  private static final Logger LOGGER = LoggerFactory.getLogger(ChaosSpringPropertiesImpl.class);
 
   public ChaosSpringPropertiesImpl(Environment environment) {
     this.environment = environment;

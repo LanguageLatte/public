@@ -90,4 +90,14 @@ public class ChaosService implements ChaosServiceInterface {
   public String getStringProperty(String key) {
     return chaosProperties.getStringProperty(key);
   }
+
+  @Override
+  public Boolean isTodayEnabled() {
+    return chaosProperties.isTodayEnabled();
+  }
+
+  @Override
+  public Boolean isThisHourEnabled() {
+    return chaosProperties.isThisHourEnabled();
+  }
 }

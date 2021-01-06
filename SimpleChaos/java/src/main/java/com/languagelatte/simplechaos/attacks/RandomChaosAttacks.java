@@ -8,14 +8,10 @@ import com.languagelatte.simplechaos.attacks.attack.LatencyAttack;
 import com.languagelatte.simplechaos.properties.ChaosProperties;
 import com.languagelatte.simplechaos.properties.SimpleChaosConstants;
 import com.languagelatte.simplechaos.reports.Reporter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RandomChaosAttacks implements ChaosAttacks {
-
-  // 1. Is Simple Chaos Enabled?
-  // 2. Is Random Chaos Enabled?
-  // 3. Is correct Day of week, and Hour
-  // 4. Is the specific method Enabled?
-  // 5. Id the random number <= than the chance?
 
   private final Reporter reporter;
   private final ChaosProperties properties;
@@ -23,6 +19,7 @@ public class RandomChaosAttacks implements ChaosAttacks {
   private final Attack latency;
   private final Attack jvmCrash;
   private final Attack error;
+  private static final Logger LOGGER = LoggerFactory.getLogger(RandomChaosAttacks.class);
 
   public RandomChaosAttacks(
       Reporter reporter,
@@ -45,64 +42,32 @@ public class RandomChaosAttacks implements ChaosAttacks {
 
   @Override
   public void exception() {
-    if (!properties.getBooleanProperty(SimpleChaosConstants.ENABLED)) {
-      return;
-    }
-
-    if (!properties.getBooleanProperty(SimpleChaosConstants.EXCEPTION_ATTACK_ENABLED)) {
-      return;
-    }
-    if (Math.random()
-        > 1 - properties.getDoubleProperty(SimpleChaosConstants.EXCEPTION_ATTACK_CHANCE)) {
-      reporter.reportAttack(ChaosAttack.EXCEPTION, true);
+    if (properties.shouldAttackRun(ChaosAttack.EXCEPTION)) {
+      reporter.reportAttack(ChaosAttack.EXCEPTION);
       exception.attack(properties);
     }
   }
 
   @Override
   public void error() {
-    if (!properties.getBooleanProperty(SimpleChaosConstants.ENABLED)) {
-      return;
-    }
-
-    if (!properties.getBooleanProperty(SimpleChaosConstants.ERROR_ATTACK_ENABLED)) {
-      return;
-    }
-    if (Math.random()
-        > 1 - properties.getDoubleProperty(SimpleChaosConstants.ERROR_ATTACK_CHANCE)) {
-      reporter.reportAttack(ChaosAttack.ERROR, true);
+    if (properties.shouldAttackRun(ChaosAttack.ERROR)) {
+      reporter.reportAttack(ChaosAttack.ERROR);
       error.attack(properties);
     }
   }
 
   @Override
   public void jvmCrash() {
-    if (!properties.getBooleanProperty(SimpleChaosConstants.ENABLED)) {
-      return;
-    }
-
-    if (!properties.getBooleanProperty(SimpleChaosConstants.JVMCRASH_ATTACK_ENABLED)) {
-      return;
-    }
-    if (Math.random()
-        > 1 - properties.getDoubleProperty(SimpleChaosConstants.JVMCRASH_ATTACK_CHANCE)) {
-      reporter.reportAttack(ChaosAttack.JVMCRASH, true);
+    if (properties.shouldAttackRun(ChaosAttack.JVMCRASH)) {
+      reporter.reportAttack(ChaosAttack.JVMCRASH);
       jvmCrash.attack(properties);
     }
   }
 
   @Override
   public void latency() {
-    if (!properties.getBooleanProperty(SimpleChaosConstants.ENABLED)) {
-      return;
-    }
-
-    if (!properties.getBooleanProperty(SimpleChaosConstants.LATENCY_ATTACK_ENABLED)) {
-      return;
-    }
-    if (Math.random()
-        > 1 - properties.getDoubleProperty(SimpleChaosConstants.LATENCY_ATTACK_CHANCE)) {
-      reporter.reportAttack(ChaosAttack.LATENCY, true);
+    if (properties.shouldAttackRun(ChaosAttack.LATENCY)) {
+      reporter.reportAttack(ChaosAttack.LATENCY);
       latency.attack(properties);
     }
   }

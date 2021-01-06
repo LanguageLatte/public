@@ -10,11 +10,18 @@ public class SimpleChaosConstants {
   public static final Map<String, String> defaultValueMap;
   public static final Set<String> propertyNames;
 
-  public static final String ENABLED = "com.languagelatte.simplechaos.attacks.enabled";
+  public static final String ENABLED = "com.languagelatte.simplechaos.attacks.enabled.enabled";
   public static final String ENABLED_DEFAULT_VALUE = "false";
 
   public static final String REPORTER_CLASS = "com.languagelatte.simplechaos.reporter";
   public static final String ATTACKER_CLASS = "com.languagelatte.simplechaos.attacker";
+
+  public static final String ENABLED_DAYS = "com.languagelatte.simplechaos.attacks.enabled.days";
+  public static final String ENABLED_DAYS_DEFAULT_VALUE =
+      "MONDAY,TUESDAY,WEDNSDAY,THURSDAY,FRIDAY";
+
+  public static final String ENABLED_HOURS = "com.languagelatte.simplechaos.attacks.enabled.hours";
+  public static final String ENABLED_HOURS_DEFAULT_VALUE = "9,10,11,12,13,14,15,16,17";
 
   public static final String EXCEPTION_ATTACK_ENABLED =
       "com.languagelatte.simplechaos.attacks.exception.enabled";
@@ -65,6 +72,8 @@ public class SimpleChaosConstants {
     propertyNames = new HashSet<>();
 
     propertyNames.add(ENABLED);
+    propertyNames.add(ENABLED_DAYS);
+    propertyNames.add(ENABLED_HOURS);
     propertyNames.add(EXCEPTION_ATTACK_ENABLED);
     propertyNames.add(EXCEPTION_ATTACK_CHANCE);
     propertyNames.add(LATENCY_ATTACK_ENABLED);
@@ -78,6 +87,8 @@ public class SimpleChaosConstants {
     propertyNames.add(JVMCRASH_ATTACK_MODE);
 
     defaultValueMap.put(ENABLED, ENABLED_DEFAULT_VALUE);
+    defaultValueMap.put(ENABLED_DAYS, ENABLED_DAYS_DEFAULT_VALUE);
+    defaultValueMap.put(ENABLED_HOURS, ENABLED_HOURS_DEFAULT_VALUE);
     defaultValueMap.put(EXCEPTION_ATTACK_ENABLED, EXCEPTION_ATTACK_ENABLED_DEFAULT_VALUE);
     defaultValueMap.put(EXCEPTION_ATTACK_CHANCE, EXCEPTION_ATTACK_CHANCE_DEFAULT_VALUE);
     defaultValueMap.put(LATENCY_ATTACK_ENABLED, LATENCY_ATTACK_ENABLED_DEFAULT_VALUE);
