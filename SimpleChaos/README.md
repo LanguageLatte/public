@@ -5,7 +5,9 @@ Simple Chaos is a code based chaos testing library. Specifically, it is meant to
 ## What is Chaos Testing
 The idea of chaos tesing is that failures will happen. Failure is not optional. Failure is a fact.
 
-So what happens when your application has failures? What happens when your DB goes down? What happens when your network fails? What happens when your server runs out of memory? What happens when ...? 
+So what happens when your application has failures? What happens when your DB goes down? What happens when your network fails? What happens when your server runs out of memory? What happens when one app fails
+
+What happens when ...? 
 
 Chaos testing aims to answer these questions by purposly introducing errors into your application. Initially just in your Dev or QA environments, but then also in your Production environment once you reach the needed maturity. Yes, you should purposley intorduce failures into your production environment!
 
@@ -28,6 +30,9 @@ Link to Individual project READMEs
 * [Java](java/README.md) - Java ony implementation of the SimpleChaos Interface.
 * [Spring](spring/README.md) - Same as the Java project, but can be autowired and can use spring `Enviornment` for properties.
 * [Spring-AOP](spring-aop/README.md) - Uses Spring AOP, so no code changes are needed in your application code. Can automatically attack classes that use common spring annonations like `@Service`, `@Component`, `@Controller` and `@Repository`.
+
+## Demo Projects
+Every Simple Chaos implementation has several demo projects to show their use. 
 
 
 ## Versioning
