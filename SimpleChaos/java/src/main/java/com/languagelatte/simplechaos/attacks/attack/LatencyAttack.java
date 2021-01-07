@@ -12,8 +12,21 @@ public class LatencyAttack implements Attack {
 
   @Override
   public void attack(ChaosProperties properties) {
-    int min = properties.getIntProperty(SimpleChaosConstants.LATENCY_ATTACK_MINTIME);
-    int max = properties.getIntProperty(SimpleChaosConstants.LATENCY_ATTACK_MAXTIME);
+    int min;
+    int max;
+
+    if (properties.isPropertyValuePresent(SimpleChaosConstants.LATENCY_ATTACK_MINTIME)) {
+      min = properties.getIntProperty(SimpleChaosConstants.LATENCY_ATTACK_MINTIME);
+    } else {
+      min = 1000;
+    }
+
+    if (properties.isPropertyValuePresent(SimpleChaosConstants.LATENCY_ATTACK_MAXTIME)) {
+      max = properties.getIntProperty(SimpleChaosConstants.LATENCY_ATTACK_MAXTIME);
+    } else {
+      max = 25000;
+    }
+
     Random r = new Random();
 
     int bound = (max - min) > 0 ? (max - min) : 1;

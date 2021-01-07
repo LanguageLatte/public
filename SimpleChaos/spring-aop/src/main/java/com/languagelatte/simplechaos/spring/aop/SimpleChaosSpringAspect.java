@@ -53,7 +53,7 @@ public class SimpleChaosSpringAspect {
   public void classAnnotatedWithComponent() {}
 
   @Pointcut("within(@org.springframework.scheduling.annotation.Scheduled *)")
-  public void classAnnotatedWithScheduled(){}
+  public void classAnnotatedWithScheduled() {}
 
   @Around(
       "publicMethodNonFinalNonEnumClass() "

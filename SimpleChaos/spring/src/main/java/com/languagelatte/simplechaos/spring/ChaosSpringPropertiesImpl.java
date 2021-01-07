@@ -1,26 +1,19 @@
 package com.languagelatte.simplechaos.spring;
 
 import com.languagelatte.simplechaos.properties.ChaosProperties;
-import com.languagelatte.simplechaos.properties.SimpleChaosConstants;
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Properties;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ChaosSpringPropertiesImpl implements ChaosProperties {
 
-  private final Environment environment;
+  private Environment environment;
   private final Map<String, String> properties = new HashMap<>();
-  private static final Logger LOGGER = LoggerFactory.getLogger(ChaosSpringPropertiesImpl.class);
+  // private static final Logger LOGGER =
+  // LoggerFactory.getLogger(ChaosSpringPropertiesImpl.class);
 
   public ChaosSpringPropertiesImpl(Environment environment) {
     this.environment = environment;
@@ -41,22 +34,6 @@ public class ChaosSpringPropertiesImpl implements ChaosProperties {
   }
 
   @Override
-  public void loadProperties() {
-    // Load From system variables.
-    // If not existing, then load default values
-    for (Entry<String, String> entry : SimpleChaosConstants.defaultValueMap.entrySet()) {
-
-      String systemValue = System.getProperty(entry.getKey());
-
-      if (isValidPropertyValue(entry.getKey(), systemValue)) {
-        this.properties.put(entry.getKey(), systemValue);
-      } else {
-        this.properties.put(entry.getKey(), entry.getValue());
-      }
-    }
-  }
-
-  @Override
   public Integer getIntProperty(String key) {
     return isValidPropertyValue(key, environment.getProperty(key))
         ? Integer.valueOf(environment.getProperty(key))
@@ -68,5 +45,36 @@ public class ChaosSpringPropertiesImpl implements ChaosProperties {
     return isValidPropertyValue(key, environment.getProperty(key))
         ? String.valueOf(environment.getProperty(key))
         : String.valueOf(properties.get(key));
+  }
+
+  @Override
+  public Boolean isPropertyValuePresent(String key) {
+
+    if (environment.getProperty(key) == null && properties.get(key) == null) {
+      return Boolean.FALSE;
+    } else {
+      return Boolean.TRUE;
+    }
+  }
+
+  @Override
+  public void loadProperties(Map<String, String> properties) {
+
+    for (Map.Entry<String, String> e : properties.entrySet()) {
+      if (isValidPropertyValue(e.getKey(), e.getValue())) {
+        this.properties.put(e.getKey(), e.getValue());
+      }
+    }
+  }
+
+  @Override
+  public void loadProperties(Properties properties) {
+
+    for (Map.Entry<Object, Object> e : properties.entrySet()) {
+
+      if (isValidPropertyValue(e.getKey().toString(), e.getValue().toString())) {
+        this.properties.put(e.getKey().toString(), e.getValue().toString());
+      }
+    }
   }
 }

@@ -1,21 +1,21 @@
 package com.languagelatte.simplechaos.properties;
 
+import com.languagelatte.simplechaos.attacks.ChaosAttack;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
-
-import com.languagelatte.simplechaos.attacks.ChaosAttack;
+import java.util.Map;
+import java.util.Properties;
 
 public interface ChaosProperties {
 
-  // Load from system properties
-  public void loadProperties();
+  public void loadProperties(Map<String, String> properties);
 
-  // public void loadProperties(Map<String, String> properties);
+  public void loadProperties(Properties properties);
 
-  // public void loadProperties(Properties properties);
+  public Boolean isPropertyValuePresent(String key);
 
   public Boolean getBooleanProperty(String key);
 
@@ -25,25 +25,37 @@ public interface ChaosProperties {
 
   public String getStringProperty(String key);
 
-  default Boolean isTodayEnabled(){
+  default Boolean isTodayEnabled() {
     LocalDateTime ldt = LocalDateTime.now(ZoneId.systemDefault());
     DayOfWeek today = ldt.getDayOfWeek();
-    List<String> days = Arrays.asList(getStringProperty(SimpleChaosConstants.ENABLED_DAYS).split(","));
+    List<String> days;
+
+    if (isPropertyValuePresent(SimpleChaosConstants.ENABLED_DAYS)) {
+      days = Arrays.asList(getStringProperty(SimpleChaosConstants.ENABLED_DAYS).split(","));
+    } else {
+      days = Arrays.asList("MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY");
+    }
     return days.contains(today.toString());
   }
 
-  default Boolean isThisHourEnabled(){
+  default Boolean isThisHourEnabled() {
     LocalDateTime ldt = LocalDateTime.now(ZoneId.systemDefault());
     Integer hour = ldt.getHour();
-    List<String> hours = Arrays.asList(getStringProperty(SimpleChaosConstants.ENABLED_HOURS).split(","));
+    List<String> hours;
+    if (isPropertyValuePresent(SimpleChaosConstants.ENABLED_HOURS)) {
+      hours = Arrays.asList(getStringProperty(SimpleChaosConstants.ENABLED_HOURS).split(","));
+    } else {
+      // Default 9am to 4pm (0900 - 1600)
+      hours = Arrays.asList("9", "10", "11", "12", "13", "14", "15", "16");
+    }
     return hours.contains(hour.toString());
   }
 
-  default Boolean isAttackEnabled(ChaosAttack attack){
+  default Boolean isAttackEnabled(ChaosAttack attack) {
     return getBooleanProperty(attack.getAttackEnabledKey());
   }
 
-  default Boolean shouldAttackRun(ChaosAttack attack){
+  default Boolean shouldAttackRun(ChaosAttack attack) {
     if (!getBooleanProperty(SimpleChaosConstants.ENABLED)) {
       return false;
     }

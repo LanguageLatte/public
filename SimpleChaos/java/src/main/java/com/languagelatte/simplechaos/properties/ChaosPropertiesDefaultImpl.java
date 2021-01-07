@@ -2,7 +2,7 @@ package com.languagelatte.simplechaos.properties;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,42 +12,25 @@ public class ChaosPropertiesDefaultImpl implements ChaosProperties {
   private static final Logger LOGGER = LoggerFactory.getLogger(ChaosPropertiesDefaultImpl.class);
 
   @Override
-  public void loadProperties() {
+  public void loadProperties(Map<String, String> properties) {
 
-    for (Map.Entry<String, String> entry : SimpleChaosConstants.defaultValueMap.entrySet()) {
-
-      String systemValue = System.getProperty(entry.getKey());
-
-      if (isValidPropertyValue(entry.getKey(), systemValue)) {
-        this.properties.put(entry.getKey(), systemValue);
-      } else {
-        this.properties.put(entry.getKey(), entry.getValue());
+    for (Map.Entry<String, String> e : properties.entrySet()) {
+      if (isValidPropertyValue(e.getKey(), e.getValue())) {
+        this.properties.put(e.getKey(), e.getValue());
       }
     }
   }
 
-  // @Override
-  // public void loadProperties(Map<String, String> properties) {
-  // loadProperties();
+  @Override
+  public void loadProperties(Properties properties) {
 
-  // for (Entry<String, String> e : properties.entrySet()) {
-  // if (isValidPropertyValue(e.getKey(), e.getValue())) {
-  // this.properties.put(e.getKey(), e.getValue());
-  // }
-  // }
-  // }
+    for (Map.Entry<Object, Object> e : properties.entrySet()) {
 
-  // @Override
-  // public void loadProperties(Properties properties) {
-  // loadProperties();
-
-  // for (Entry<Object, Object> e : properties.entrySet()) {
-
-  // if (isValidPropertyValue(e.getKey().toString(), e.getValue().toString())) {
-  // this.properties.put(e.getKey().toString(), e.getValue().toString());
-  // }
-  // }
-  // }
+      if (isValidPropertyValue(e.getKey().toString(), e.getValue().toString())) {
+        this.properties.put(e.getKey().toString(), e.getValue().toString());
+      }
+    }
+  }
 
   @Override
   public Boolean getBooleanProperty(String key) {
@@ -56,16 +39,36 @@ public class ChaosPropertiesDefaultImpl implements ChaosProperties {
 
   @Override
   public Double getDoubleProperty(String key) {
-    return Double.valueOf(properties.get(key));
+    Double d = 0.0;
+
+    try {
+      d = Double.valueOf(properties.get(key));
+    } catch (Exception e) {
+      LOGGER.trace("No defined value for " + key + "Defaulting to '0.0'");
+    }
+    return d;
   }
 
   @Override
   public Integer getIntProperty(String key) {
-    return Integer.valueOf(properties.get(key));
+    Integer i = 0;
+
+    try {
+      i = Integer.valueOf(properties.get(key));
+    } catch (Exception e) {
+      LOGGER.trace("No defined value for " + key + "Defaulting to '0'");
+    }
+    return i;
   }
 
   @Override
   public String getStringProperty(String key) {
-    return String.valueOf(properties.get(key));
+    String s = String.valueOf(properties.get(key));
+    return "null".equals(s) ? "" : s;
+  }
+
+  @Override
+  public Boolean isPropertyValuePresent(String key) {
+    return properties.get(key) == null ? Boolean.FALSE : Boolean.TRUE;
   }
 }

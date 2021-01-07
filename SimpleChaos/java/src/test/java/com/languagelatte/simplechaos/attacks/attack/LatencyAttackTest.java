@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import com.languagelatte.simplechaos.properties.ChaosProperties;
 import com.languagelatte.simplechaos.properties.ChaosPropertiesDefaultImpl;
 import com.languagelatte.simplechaos.properties.SimpleChaosConstants;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 public class LatencyAttackTest {
@@ -15,11 +17,11 @@ public class LatencyAttackTest {
     Integer min = 999;
     Integer max = 1000;
 
-    System.setProperty(SimpleChaosConstants.LATENCY_ATTACK_MINTIME, min.toString());
-    System.setProperty(SimpleChaosConstants.LATENCY_ATTACK_MAXTIME, max.toString());
-
     ChaosProperties properties = new ChaosPropertiesDefaultImpl();
-    properties.loadProperties();
+    Map<String, String> props = new HashMap<>();
+    props.put(SimpleChaosConstants.LATENCY_ATTACK_MINTIME, min.toString());
+    props.put(SimpleChaosConstants.LATENCY_ATTACK_MAXTIME, max.toString());
+    properties.loadProperties(props);
 
     Attack latencyAttack = new LatencyAttack();
 
@@ -36,11 +38,11 @@ public class LatencyAttackTest {
     Integer min = 0;
     Integer max = 0;
 
-    System.setProperty(SimpleChaosConstants.LATENCY_ATTACK_MINTIME, min.toString());
-    System.setProperty(SimpleChaosConstants.LATENCY_ATTACK_MAXTIME, max.toString());
-
     ChaosProperties properties = new ChaosPropertiesDefaultImpl();
-    properties.loadProperties();
+    Map<String, String> props = new HashMap<>();
+    props.put(SimpleChaosConstants.LATENCY_ATTACK_MINTIME, min.toString());
+    props.put(SimpleChaosConstants.LATENCY_ATTACK_MAXTIME, max.toString());
+    properties.loadProperties(props);
 
     Attack latencyAttack = new LatencyAttack();
 
@@ -58,11 +60,11 @@ public class LatencyAttackTest {
     Integer min = 1000;
     Integer max = 100;
 
-    System.setProperty(SimpleChaosConstants.LATENCY_ATTACK_MINTIME, min.toString());
-    System.setProperty(SimpleChaosConstants.LATENCY_ATTACK_MAXTIME, max.toString());
-
     ChaosProperties properties = new ChaosPropertiesDefaultImpl();
-    properties.loadProperties();
+    Map<String, String> props = new HashMap<>();
+    props.put(SimpleChaosConstants.LATENCY_ATTACK_MINTIME, min.toString());
+    props.put(SimpleChaosConstants.LATENCY_ATTACK_MAXTIME, max.toString());
+    properties.loadProperties(props);
 
     Attack latencyAttack = new LatencyAttack();
 

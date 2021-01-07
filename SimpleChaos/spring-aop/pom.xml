@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.languagelatte</groupId>
     <artifactId>simple-chaos-spring-aop</artifactId>
-    <version>0.0.6</version>
+    <version>0.0.7</version>
     <packaging>jar</packaging>
 
     <name>SimpleChaos</name>
@@ -141,7 +141,7 @@
         <dependency>
             <groupId>com.languagelatte</groupId>
             <artifactId>simple-chaos-spring</artifactId>
-            <version>0.0.6</version>
+            <version>0.0.7</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

@@ -7,9 +7,10 @@ import com.languagelatte.simplechaos.attacks.attack.ExceptionAttack;
 import com.languagelatte.simplechaos.attacks.attack.JvmCrashAttack;
 import com.languagelatte.simplechaos.attacks.attack.LatencyAttack;
 import com.languagelatte.simplechaos.properties.ChaosProperties;
-import com.languagelatte.simplechaos.properties.ChaosPropertiesDefaultImpl;
 import com.languagelatte.simplechaos.reports.ConsoleLogReporter;
 import com.languagelatte.simplechaos.reports.Reporter;
+import java.util.Map;
+import java.util.Properties;
 
 public class ChaosService implements ChaosServiceInterface {
 
@@ -17,24 +18,9 @@ public class ChaosService implements ChaosServiceInterface {
   private final Reporter reporter;
   private final ChaosAttacks chaosAttacks;
 
-  public ChaosService() {
-    this.chaosProperties = new ChaosPropertiesDefaultImpl();
-    this.chaosProperties.loadProperties();
-    this.reporter = new ConsoleLogReporter();
-    this.chaosAttacks =
-        new RandomChaosAttacks(
-            reporter,
-            chaosProperties,
-            new ExceptionAttack(),
-            new LatencyAttack(),
-            new JvmCrashAttack(),
-            new ErrorAttack());
-  }
-
   public ChaosService(ChaosProperties chaosProperties) {
 
     this.chaosProperties = chaosProperties;
-    this.chaosProperties.loadProperties();
     this.reporter = new ConsoleLogReporter();
     this.chaosAttacks =
         new RandomChaosAttacks(
@@ -67,11 +53,6 @@ public class ChaosService implements ChaosServiceInterface {
   }
 
   @Override
-  public void loadProperties() {
-    chaosProperties.loadProperties();
-  }
-
-  @Override
   public Boolean getBooleanProperty(String key) {
     return chaosProperties.getBooleanProperty(key);
   }
@@ -99,5 +80,20 @@ public class ChaosService implements ChaosServiceInterface {
   @Override
   public Boolean isThisHourEnabled() {
     return chaosProperties.isThisHourEnabled();
+  }
+
+  @Override
+  public Boolean isPropertyValuePresent(String key) {
+    return chaosProperties.isPropertyValuePresent(key);
+  }
+
+  @Override
+  public void loadProperties(Map<String, String> properties) {
+    chaosProperties.loadProperties(properties);
+  }
+
+  @Override
+  public void loadProperties(Properties properties) {
+    chaosProperties.loadProperties(properties);
   }
 }

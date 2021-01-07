@@ -6,10 +6,7 @@ import com.languagelatte.simplechaos.attacks.attack.ExceptionAttack;
 import com.languagelatte.simplechaos.attacks.attack.JvmCrashAttack;
 import com.languagelatte.simplechaos.attacks.attack.LatencyAttack;
 import com.languagelatte.simplechaos.properties.ChaosProperties;
-import com.languagelatte.simplechaos.properties.SimpleChaosConstants;
 import com.languagelatte.simplechaos.reports.Reporter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class RandomChaosAttacks implements ChaosAttacks {
 
@@ -19,7 +16,7 @@ public class RandomChaosAttacks implements ChaosAttacks {
   private final Attack latency;
   private final Attack jvmCrash;
   private final Attack error;
-  private static final Logger LOGGER = LoggerFactory.getLogger(RandomChaosAttacks.class);
+  // private static final Logger LOGGER = LoggerFactory.getLogger(RandomChaosAttacks.class);
 
   public RandomChaosAttacks(
       Reporter reporter,
@@ -28,16 +25,12 @@ public class RandomChaosAttacks implements ChaosAttacks {
       LatencyAttack latency,
       JvmCrashAttack jvmCrash,
       ErrorAttack error) {
-
     this.reporter = reporter;
     this.properties = properties;
-
     this.exception = exception;
     this.error = error;
     this.latency = latency;
     this.jvmCrash = jvmCrash;
-
-    this.properties.loadProperties();
   }
 
   @Override

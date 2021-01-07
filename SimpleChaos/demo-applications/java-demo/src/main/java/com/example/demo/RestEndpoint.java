@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestEndpoint {
 
 
-    // In the Application.java we set the properties manually into System Properties
-    ChaosService chaosService = new ChaosService();
+    
+    ChaosService chaosService = new ChaosService(Application.props);
     
     @RequestMapping(value = "/exception", method = RequestMethod.GET)
     @ResponseBody
