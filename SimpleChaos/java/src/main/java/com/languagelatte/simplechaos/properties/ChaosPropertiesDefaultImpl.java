@@ -15,9 +15,8 @@ public class ChaosPropertiesDefaultImpl implements ChaosProperties {
   public void loadProperties(Map<String, String> properties) {
 
     for (Map.Entry<String, String> e : properties.entrySet()) {
-      if (isValidPropertyValue(e.getKey(), e.getValue())) {
-        this.properties.put(e.getKey(), e.getValue());
-      }
+
+      this.properties.put(e.getKey(), e.getValue());
     }
   }
 
@@ -26,9 +25,7 @@ public class ChaosPropertiesDefaultImpl implements ChaosProperties {
 
     for (Map.Entry<Object, Object> e : properties.entrySet()) {
 
-      if (isValidPropertyValue(e.getKey().toString(), e.getValue().toString())) {
-        this.properties.put(e.getKey().toString(), e.getValue().toString());
-      }
+      this.properties.put(e.getKey().toString(), e.getValue().toString());
     }
   }
 
@@ -69,6 +66,8 @@ public class ChaosPropertiesDefaultImpl implements ChaosProperties {
 
   @Override
   public Boolean isPropertyValuePresent(String key) {
-    return properties.get(key) == null ? Boolean.FALSE : Boolean.TRUE;
+    return properties.get(key) == null || "".equals(properties.get(key).trim())
+        ? Boolean.FALSE
+        : Boolean.TRUE;
   }
 }

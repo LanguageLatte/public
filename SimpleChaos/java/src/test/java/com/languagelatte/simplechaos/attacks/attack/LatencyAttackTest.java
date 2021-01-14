@@ -7,6 +7,7 @@ import com.languagelatte.simplechaos.properties.ChaosPropertiesDefaultImpl;
 import com.languagelatte.simplechaos.properties.SimpleChaosConstants;
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 public class LatencyAttackTest {
@@ -14,7 +15,7 @@ public class LatencyAttackTest {
   @Test
   public void testLatency1000() {
 
-    Integer min = 999;
+    Integer min = 1000;
     Integer max = 1000;
 
     ChaosProperties properties = new ChaosPropertiesDefaultImpl();
@@ -73,5 +74,22 @@ public class LatencyAttackTest {
     long timeTaken = System.currentTimeMillis() - start;
 
     assertTrue((timeTaken < min + 50) && (timeTaken > min - 50));
+  }
+
+  @Test
+  @Ignore
+  public void testDefault() {
+
+    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    Map<String, String> props = new HashMap<>();
+    properties.loadProperties(props);
+
+    Attack latencyAttack = new LatencyAttack();
+
+    long start = System.currentTimeMillis();
+    latencyAttack.attack(properties);
+    long timeTaken = System.currentTimeMillis() - start;
+
+    assertTrue((timeTaken < 25_000 + 50) && (timeTaken > 1_000 - 50));
   }
 }

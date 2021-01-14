@@ -9,10 +9,12 @@ import com.languagelatte.simplechaos.attacks.attack.LatencyAttack;
 import com.languagelatte.simplechaos.properties.ChaosProperties;
 import com.languagelatte.simplechaos.reports.ConsoleLogReporter;
 import com.languagelatte.simplechaos.reports.Reporter;
+import java.time.Clock;
+import java.time.ZoneId;
 import java.util.Map;
 import java.util.Properties;
 
-public class ChaosService implements ChaosServiceInterface {
+public class ChaosService implements ChaosAttacks {
 
   private final ChaosProperties chaosProperties;
   private final Reporter reporter;
@@ -29,7 +31,8 @@ public class ChaosService implements ChaosServiceInterface {
             new ExceptionAttack(),
             new LatencyAttack(),
             new JvmCrashAttack(),
-            new ErrorAttack());
+            new ErrorAttack(),
+            Clock.system(ZoneId.systemDefault()));
   }
 
   @Override
@@ -52,48 +55,46 @@ public class ChaosService implements ChaosServiceInterface {
     chaosAttacks.latency();
   }
 
-  @Override
-  public Boolean getBooleanProperty(String key) {
-    return chaosProperties.getBooleanProperty(key);
-  }
-
-  @Override
-  public Double getDoubleProperty(String key) {
-    return chaosProperties.getDoubleProperty(key);
-  }
-
-  @Override
-  public Integer getIntProperty(String key) {
-    return chaosProperties.getIntProperty(key);
-  }
-
-  @Override
-  public String getStringProperty(String key) {
-    return chaosProperties.getStringProperty(key);
-  }
-
-  @Override
-  public Boolean isTodayEnabled() {
-    return chaosProperties.isTodayEnabled();
-  }
-
-  @Override
-  public Boolean isThisHourEnabled() {
-    return chaosProperties.isThisHourEnabled();
-  }
-
-  @Override
-  public Boolean isPropertyValuePresent(String key) {
-    return chaosProperties.isPropertyValuePresent(key);
-  }
-
-  @Override
   public void loadProperties(Map<String, String> properties) {
     chaosProperties.loadProperties(properties);
   }
 
-  @Override
   public void loadProperties(Properties properties) {
     chaosProperties.loadProperties(properties);
   }
+
+  // @Override
+  // public Boolean getBooleanProperty(String key) {
+  //   return chaosProperties.getBooleanProperty(key);
+  // }
+
+  // @Override
+  // public Double getDoubleProperty(String key) {
+  //   return chaosProperties.getDoubleProperty(key);
+  // }
+
+  // @Override
+  // public Integer getIntProperty(String key) {
+  //   return chaosProperties.getIntProperty(key);
+  // }
+
+  // @Override
+  // public String getStringProperty(String key) {
+  //   return chaosProperties.getStringProperty(key);
+  // }
+
+  // @Override
+  // public Boolean isTodayEnabled() {
+  //   return chaosProperties.isTodayEnabled();
+  // }
+
+  // @Override
+  // public Boolean isThisHourEnabled() {
+  //   return chaosProperties.isThisHourEnabled();
+  // }
+
+  // @Override
+  // public Boolean isPropertyValuePresent(String key) {
+  //   return chaosProperties.isPropertyValuePresent(key);
+  // }
 }

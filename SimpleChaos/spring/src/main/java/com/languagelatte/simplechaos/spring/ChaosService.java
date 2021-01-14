@@ -8,6 +8,8 @@ import com.languagelatte.simplechaos.attacks.attack.JvmCrashAttack;
 import com.languagelatte.simplechaos.attacks.attack.LatencyAttack;
 import com.languagelatte.simplechaos.properties.ChaosProperties;
 import com.languagelatte.simplechaos.reports.ConsoleLogReporter;
+import java.time.Clock;
+import java.time.ZoneId;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,7 +28,8 @@ public class ChaosService implements ChaosAttacks {
             new ExceptionAttack(),
             new LatencyAttack(),
             new JvmCrashAttack(),
-            new ErrorAttack());
+            new ErrorAttack(),
+            Clock.system(ZoneId.systemDefault()));
   }
 
   @Override

@@ -1,6 +1,7 @@
 package com.languagelatte.simplechaos.properties;
 
 import com.languagelatte.simplechaos.attacks.ChaosAttack;
+import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -25,8 +26,8 @@ public interface ChaosProperties {
 
   public String getStringProperty(String key);
 
-  default Boolean isTodayEnabled() {
-    LocalDateTime ldt = LocalDateTime.now(ZoneId.systemDefault());
+  default Boolean isTodayEnabled(Clock clock) {
+    LocalDateTime ldt = LocalDateTime.now(clock.withZone(ZoneId.systemDefault()));
     DayOfWeek today = ldt.getDayOfWeek();
     List<String> days;
 
@@ -38,8 +39,8 @@ public interface ChaosProperties {
     return days.contains(today.toString());
   }
 
-  default Boolean isThisHourEnabled() {
-    LocalDateTime ldt = LocalDateTime.now(ZoneId.systemDefault());
+  default Boolean isThisHourEnabled(Clock clock) {
+    LocalDateTime ldt = LocalDateTime.now(clock.withZone(ZoneId.systemDefault()));
     Integer hour = ldt.getHour();
     List<String> hours;
     if (isPropertyValuePresent(SimpleChaosConstants.ENABLED_HOURS)) {
@@ -55,12 +56,12 @@ public interface ChaosProperties {
     return getBooleanProperty(attack.getAttackEnabledKey());
   }
 
-  default Boolean shouldAttackRun(ChaosAttack attack) {
+  default Boolean shouldAttackRun(ChaosAttack attack, Clock clock) {
     if (!getBooleanProperty(SimpleChaosConstants.ENABLED)) {
       return false;
     }
 
-    if (!isTodayEnabled() || !isThisHourEnabled()) {
+    if (!isTodayEnabled(clock) || !isThisHourEnabled(clock)) {
       return false;
     }
 
@@ -69,18 +70,6 @@ public interface ChaosProperties {
     }
 
     if (!(Math.random() > 1 - getDoubleProperty(attack.getAttackChanceKey()))) {
-      return false;
-    }
-    return true;
-  }
-
-  default Boolean isValidPropertyValue(String key, String value) {
-
-    if (key == null || value == null) {
-      return false;
-    }
-
-    if (!SimpleChaosConstants.propertyNames.contains(key)) {
       return false;
     }
     return true;

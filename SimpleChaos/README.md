@@ -26,13 +26,13 @@ The primary interface is the `ChaosAttacks` interface
 * ~~public highNetwork()~~ (more research needed, might not be a useful or possible attack) 
 
 ## Sub Projects
+
+
 Link to Individual project READMEs
+
 * [Java](java/README.md) - Java ony implementation of the SimpleChaos Interface.
 * [Spring](spring/README.md) - Same as the Java project, but can be autowired and can use spring `Enviornment` for properties.
 * [Spring-AOP](spring-aop/README.md) - Uses Spring AOP, so no code changes are needed in your application code. Can automatically attack classes that use common spring annonations like `@Service`, `@Component`, `@Controller` and `@Repository`.
-
-## Demo Projects
-Every Simple Chaos implementation has several demo projects to show their use. 
 
 
 ## Versioning
