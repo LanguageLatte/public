@@ -9,7 +9,7 @@ So what happens when your application has failures? What happens when your DB go
 
 What happens when ...? 
 
-Chaos testing aims to answer these questions by purposly introducing errors into your application. Initially just in your Dev or QA environments, but then also in your Production environment once you reach the needed maturity. Yes, you should purposley intorduce failures into your production environment!
+Chaos testing aims to answer these questions by purposely introducing errors into your application. Initially just in your Dev or QA environments, but then also in your Production environment once you reach the needed maturity. Yes, you should purposley intorduce failures into your production environment!
 
 
 ## Primary Interface
