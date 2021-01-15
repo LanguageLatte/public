@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.languagelatte</groupId>
     <artifactId>simple-chaos-spring-aop</artifactId>
-    <version>0.0.7</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>SimpleChaos</name>
@@ -160,7 +160,7 @@
         <dependency>
             <groupId>com.languagelatte</groupId>
             <artifactId>simple-chaos-spring</artifactId>
-            <version>0.0.7</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -211,18 +211,6 @@
             <id>formatter</id>
             <properties>
                 <formatter.goal>check</formatter.goal>
-            </properties>
-        </profile>
-        <profile>
-            <id>Java-8</id>
-            <properties>
-                <java.version>8</java.version>
-            </properties>
-        </profile>
-        <profile>
-            <id>Java-11</id>
-            <properties>
-                <java.version>11</java.version>
             </properties>
         </profile>
     </profiles>

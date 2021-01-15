@@ -4,6 +4,13 @@
 
 **Consider using the [Spring-AOP](../spring-aop/README.md) version. This allows you to add chaos with zero code changes**
 
+Contents:
+* [Maven](#maven)
+* [Gradle](#gradle)
+* [Usage](#usage)
+* [Properties](#properties)
+
+
 ### Maven
 ```
 <dependency>
@@ -20,7 +27,7 @@ implementation 'com.languagelatte:simple-chaos-spring:x.x.x'
 
 ### Usage
 
-In your main class, (Application.java most likley), you need to make sure you are importing this project so Spring finds all the services. Adding this import should be all that is needed. 
+In your main class, (Application.java most likely), you need to make sure you are importing this project so Spring finds all the services. Adding this import should be all that is needed. 
 
 ```
 @Import(SimpleChaosSpringConfig.class)

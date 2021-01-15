@@ -2,8 +2,6 @@ package com.example.demo;
 
 import com.languagelatte.simplechaos.spring.ChaosService;
 
-//import com.languagelatte.simplechaos.spring.ChaosService;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

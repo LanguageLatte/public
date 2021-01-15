@@ -67,6 +67,8 @@ By default, all attacks are turned off. There are quite a few properties. At the
 | com.languagelatte.simplechaos.attacks.jvmcrash.enabled  | false                                    |                                                                                                                                                                                                       |
 | com.languagelatte.simplechaos.attacks.jvmcrash.mode     | NA                                       | By default, this attack will call System.exit(1), Setting this property to "RUNTIMEHALT" will use the more drastic Runtime.getRuntime().halt(1). That will skip any hooks that have been registered.  |
 | com.languagelatte.simplechaos.attacks.jvmcrash.chance   | 0.0                                      |                                                                                                                                                                                                       |
+| com.languagelatte.simplechaos.reporter                  | com.languagelatte.simplechaos.reports.ConsoleLogReporter | Logs a summary via standard slf4j logger.                                                                                                                                             |
+| com.languagelatte.simplechaos.attacker                  | com.languagelatte.simplechaos.attacks.RandomChaosAttacks | An implementation which randomly decides when to attack. Based of the chance values for each attack                                                                                   |
 |                                                         |                                          |                                                                                                                                                                                                       |
 ```
 
@@ -100,6 +102,9 @@ properties.put(SimpleChaosConstants.JVMCRASH_ATTACK_CHANCE, "0.5");
 properties.put(SimpleChaosConstants.JVMCRASH_ATTACK_MODE, "RUNTIMEHALT");
 properties.put(SimpleChaosConstants.ENABLED_HOURS, "8,9,10,11,12,13,14,15,16");
 properties.put(SimpleChaosConstants.ENABLED_DAYS, "MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY");
+properties.put(SimpleChaosConstants.REPORTER_CLASS, "com.languagelatte.simplechaos.reports.ConsoleLogReporter");
+		properties.put(SimpleChaosConstants.ATTACKER_CLASS, "com.languagelatte.simplechaos.attacks.RandomChaosAttacks");
+
 props.loadProperties(properties);
 ```
 
@@ -120,6 +125,10 @@ com.languagelatte.simplechaos.attacks.latency.chance=0.5
 com.languagelatte.simplechaos.attacks.jvmcrash.enabled=true
 com.languagelatte.simplechaos.attacks.jvmcrash.chance=0.5
 com.languagelatte.simplechaos.attacks.jvmcrash.mode=RUNTIMEHALT
+
+com.languagelatte.simplechaos.reporter=com.languagelatte.simplechaos.reports.ConsoleLogReporter
+com.languagelatte.simplechaos.attacker=com.languagelatte.simplechaos.attacks.RandomChaosAttacks
+
 ```
 
 ```
@@ -144,4 +153,6 @@ com:
                 latency:
                     chance: 0.5
                     enabled: true
+            reporter: com.languagelatte.simplechaos.reports.ConsoleLogReporter
+            attacker: com.languagelatte.simplechaos.attacks.RandomChaosAttacks
 ```

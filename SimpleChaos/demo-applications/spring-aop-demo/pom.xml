@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>com.languagelatte</groupId>
 			<artifactId>simple-chaos-spring-aop</artifactId>
-			<version>0.0.7</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

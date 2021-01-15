@@ -1,12 +1,14 @@
 package com.example.demo;
 
+import com.languagelatte.simplechaos.spring.SimpleChaosSpringConfig;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
 
 @SpringBootApplication
-@ComponentScan({"com.example", "com.languagelatte.simplechaos"})
+@Import(SimpleChaosSpringConfig.class)
 public class Application {
 
 	public static void main(String[] args) {

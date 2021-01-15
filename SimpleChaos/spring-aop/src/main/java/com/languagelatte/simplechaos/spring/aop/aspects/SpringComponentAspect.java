@@ -3,7 +3,6 @@ package com.languagelatte.simplechaos.spring.aop.aspects;
 import com.languagelatte.simplechaos.properties.ChaosProperties;
 import com.languagelatte.simplechaos.spring.ChaosService;
 import com.languagelatte.simplechaos.spring.aop.properties.SimpleChaosSpringAOPConstants;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -29,8 +28,7 @@ public class SpringComponentAspect extends BaseAspect {
           + "&& classAnnotatedWithComponent() "
           + "&& !classesAndMethodsToAvoid()")
   public Object componentIntercept(ProceedingJoinPoint pjp) throws Throwable {
-    if (chaosProperties.getBooleanProperty(
-        SimpleChaosSpringAOPConstants.COMPONENT_ENABLED)) {
+    if (chaosProperties.getBooleanProperty(SimpleChaosSpringAOPConstants.COMPONENT_ENABLED)) {
       LOGGER.trace("Inside SimpleChaos Spring Component Aspect");
       chaosService.randomAttack(chaosProperties);
     }

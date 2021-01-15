@@ -30,7 +30,12 @@ public class Application {
 		properties.put(SimpleChaosConstants.JVMCRASH_ATTACK_ENABLED, "true");
 		properties.put(SimpleChaosConstants.JVMCRASH_ATTACK_CHANCE, "0.5");
 		properties.put(SimpleChaosConstants.JVMCRASH_ATTACK_MODE, "RUNTIMEHALT");
-		properties.put(SimpleChaosConstants.ENABLED_HOURS, "17,18,19,20,21,22,23");
+		properties.put(SimpleChaosConstants.ENABLED_HOURS, "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23");
+		properties.put(SimpleChaosConstants.ENABLED_DAYS, "MONDAY,TUESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY");
+
+		properties.put(SimpleChaosConstants.REPORTER_CLASS, "com.languagelatte.simplechaos.reports.ConsoleLogReporter");
+		properties.put(SimpleChaosConstants.ATTACKER_CLASS, "com.languagelatte.simplechaos.attacks.RandomChaosAttacks");
+
 		props.loadProperties(properties);
 
 

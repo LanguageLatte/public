@@ -25,6 +25,7 @@ public class RestEndpoint {
     @ResponseBody
     public ResponseEntity<String> exception() {  
 
+        chaosService = new ChaosService(Application.props);
         String response;
         try {   
             chaosService.exception();
