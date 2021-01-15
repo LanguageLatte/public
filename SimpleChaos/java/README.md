@@ -6,6 +6,16 @@
 **If you are using Spring, look at the  [Spring](../spring/README.md) or [Spring-AOP](../spring-aop/README.md) projects. They are easier to use.**
 
 
+Contents:
+* [Maven](#maven)
+* [Gradle](#gradle)
+* [Usage](#usage)
+* [Properties](#properties)
+* [Chance of Attack](#chance-of-attack)
+* [Properties copy/paste](#properties-copy-paste)
+
+
+
 ### Maven
 ```
 <dependency>
@@ -21,8 +31,6 @@ implementation 'com.languagelatte:simple-chaos:x.x.x'
 ```
 
 ### Usage
-
-
 ```
 // 1st load your properties
 ChaosProperties properties = new ChaosPropertiesDefaultImpl();
@@ -62,13 +70,13 @@ By default, all attacks are turned off. There are quite a few properties. At the
 |                                                         |                                          |                                                                                                                                                                                                       |
 ```
 
-## Chance of attack:
+## Chance of attack
 
 By default, SimpleChaos uses a random attack chance. So if you set the chance to `0.1` there will be a 10% chance of the attack running everytime the method is called.
 
 The value you pick is up to you. Keep in mind how often the attack method is called. If you are getting 100,000 requests a day, then make sure to pick a very small chance. Conversely, if you only expect 10 requests a day, you might want to pick a larger chance like 10%. 
 
-## Properties Copy/Paste
+## Properties Copy-Paste
 
 Three versions below:
 1. Setting via `Map` in code.

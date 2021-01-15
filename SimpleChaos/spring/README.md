@@ -59,4 +59,4 @@ chaosService.jvmCrash();
 The Chaos Service will use Spring's `Environment` for all properties. By default, all attacks are turned off. 
 Please look at the base java project for all the properties that you will need to set. 
 
-[Properties](../java/README.md)
+[Properties](../java/README.md#properties)
