@@ -25,7 +25,7 @@ implementation 'com.languagelatte:simple-chaos-spring-aop:x.x.x'
 
 ### Usage
 
-This version of SimpleChaos required almost zero code changes. Simply add this jar to your project, and in your properties, choose which attacks to enable. 
+This version of SimpleChaos required almost zero code changes. Simply add this jar to your project and, in your properties, choose which attacks to enable. 
 
 In your main class, (Application.java most likely), you need to make sure you are importing this project so Spring finds all the services. Adding this import should be all that is needed. 
 

@@ -14,10 +14,8 @@
 1. [Versioning](#versioning)
 1. [Contributing](#contributing)
 
-
-
 ## What is Chaos Testing
-Chaos Testing is the idea that failures are guaranteed to happen, and that Engineers should purposly introduce errors into their production systems so that they can learn how their system really deals with failure. Examples of failures are - network latency, server crashing, database failure, network failure, expected files not existing, out of memory errors, etc.
+Chaos Testing is the idea that failures are guaranteed to happen, and that Engineers should purposly introduce errors into their **production** systems so that they can learn how their system really deals with failure. Examples of failures are - network latency, server crashing, database failure, network failure, expected files not existing, out of memory errors, etc.
 
 By purposley intoducing errors:
 * We can teach our engineers that they must build their systems to be fault tolerant from day one.
