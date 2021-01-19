@@ -25,7 +25,8 @@ Additional Reading:
 * [principlesofchaos.org](https://principlesofchaos.org/)
 * [Awesome Chaos](https://github.com/dastergon/awesome-chaos-engineering) - A Github project that links to dozens of books, articles, and tools for chaos testing.
 ## What is SimpleChaos
-Simple Chaos is a code based chaos testing library. Specifically, it is meant to be used when you do **not** have control over your infrastructure or your runtime enviornment. Traditional chaos tools require that you can destroy or modify infrastructure and/or your runtime enviornment.
+Simple Chaos is a code based chaos testing library. Traditional chaos tools require that you can destroy or modify your infrastructure or your runtime enviornment. SimpleChaos takes a code based approach to adding chaos to your applications.
+
 ### ChaosAttacks
 There are many different types of attacks that can be carried out. 
 * randomAttack - randomly picks a below attack.
@@ -61,6 +62,10 @@ Some good areas to focus on for chaos testing are:
 ## Demo Projects
 
 There are a few demo application for using SimpleChaos. They are located in the `/demo-applications` directory. 
+* [Java demo](demo-applications/java-demo/README.md)
+* [Spring demo](demo-applications/spring-demo/README.md)
+* [Spring-AOP demo](demo-applications/spring-aop-demo/README.md)
+* Kotlin and Scala examples coming soon. 
 
 ## Versioning
 All projects use [SemVer](https://semver.org/). Except versions that are below `1.0.0`. Versions below `1.0.0` should not be used in production and do not follow SemVer.
