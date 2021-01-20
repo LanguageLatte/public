@@ -26,7 +26,7 @@ public class SimpleChaosAnnotationAspect extends BaseAspect {
       "classAnnotatedAttackThisClass() && publicMethodNonFinalNonEnumClass() && !classesAndMethodsToAvoid()")
   public Object annotatedAttackThisClassIntercept(ProceedingJoinPoint pjp) throws Throwable {
 
-    LOGGER.info("Inside SimpleChaos classAnnotatedAttackThisClass Aspect");
+    LOGGER.trace("Inside SimpleChaos classAnnotatedAttackThisClass Aspect");
     chaosService.randomAttack(chaosProperties);
 
     return pjp.proceed();
@@ -36,7 +36,7 @@ public class SimpleChaosAnnotationAspect extends BaseAspect {
       "classAnnotatedAttackThisMethod() && !classAnnotatedAttackThisClass() && publicMethodNonFinalNonEnumClass() && !classesAndMethodsToAvoid()")
   public Object annotatedAttackThisMethodIntercept(ProceedingJoinPoint pjp) throws Throwable {
 
-    LOGGER.info("Inside SimpleChaos classAnnotatedAttackThisMethod Aspect");
+    LOGGER.trace("Inside SimpleChaos classAnnotatedAttackThisMethod Aspect");
     chaosService.randomAttack(chaosProperties);
 
     return pjp.proceed();
