@@ -29,7 +29,7 @@ public class SpringRepositoryAspect extends BaseAspect {
           + "&& !classesAndMethodsToAvoid()")
   public Object repositoryIntercept(ProceedingJoinPoint pjp) throws Throwable {
     if (chaosProperties.getBooleanProperty(SimpleChaosSpringAOPConstants.REPOSITORY_ENABLED)) {
-      LOGGER.info("Inside SimpleChaos Spring Repository Aspect");
+      LOGGER.trace("Inside SimpleChaos Spring Repository Aspect");
       chaosService.randomAttack(chaosProperties);
     }
     return pjp.proceed();
