@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.languagelatte</groupId>
     <artifactId>simple-chaos</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>Simple Chaos</name>
@@ -30,7 +30,7 @@
     </scm>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <formatter.goal>format</formatter.goal>
@@ -193,18 +193,6 @@
             <id>formatter</id>
             <properties>
                 <formatter.goal>check</formatter.goal>
-            </properties>
-        </profile>
-        <profile>
-            <id>Java-8</id>
-            <properties>
-                <java.version>8</java.version>
-            </properties>
-        </profile>
-        <profile>
-            <id>Java-11</id>
-            <properties>
-                <java.version>11</java.version>
             </properties>
         </profile>
     </profiles>
