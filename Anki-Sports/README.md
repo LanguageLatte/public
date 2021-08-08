@@ -24,5 +24,5 @@ python CombineCSV.py
 * 0.1 - Contains basic team info for the NBA, NFL, MLB, MLS, and NHL.
 
 ## Contributing
-Contibutions are welcome. 
+Contributions are welcome. 
 
