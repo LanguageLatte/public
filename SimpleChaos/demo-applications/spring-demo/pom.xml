@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>simplechaos-java-demo</artifactId>
-	<version>1.0.0</version>
-	<name>Demo - Java</name>
+	<artifactId>simplechaos-spring-demo</artifactId>
+	<version>1.0.</version>
+	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.languagelatte</groupId>
-			<artifactId>simple-chaos</artifactId>
+			<artifactId>simple-chaos-spring</artifactId>
 			<version>1.0.1</version>
 		</dependency>
 		<dependency>
