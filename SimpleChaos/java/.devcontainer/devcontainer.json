@@ -1,0 +1,14 @@
+{
+  "name": "SimpleChaos - Java",
+  "dockerFile" : "Dockerfile",
+
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+
+  "extensions": [
+  	"vscjava.vscode-java-pack"
+  ],
+
+  "forwardPorts": [3000]
+}
