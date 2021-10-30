@@ -1,32 +1,93 @@
 package com.languagelatte.simplechaos.properties;
 
-import com.languagelatte.simplechaos.attacks.ChaosAttack;
 import java.time.Clock;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-public interface ChaosProperties {
+import com.languagelatte.simplechaos.attacks.ChaosAttack;
 
-  public void loadProperties(Map<String, String> properties);
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-  public void loadProperties(Properties properties);
+@SuppressWarnings("ImmutableEnumChecker")
+public enum ChaosProperties {
 
-  public Boolean isPropertyValuePresent(String key);
+  INSTANCE;
 
-  public Boolean getBooleanProperty(String key);
+  private final Map<String, String> properties = new HashMap<>();
+  private static final Logger LOGGER = LoggerFactory.getLogger(ChaosProperties.class);
 
-  public Double getDoubleProperty(String key);
+  public void clearProperties(){
+    properties.clear();
+  }
 
-  public Integer getIntProperty(String key);
+  public void loadProperties(Map<String, String> properties) {
 
-  public String getStringProperty(String key);
+    for (Map.Entry<String, String> e : properties.entrySet()) {
 
-  default Boolean isTodayEnabled(Clock clock) {
+      this.properties.put(e.getKey(), e.getValue());
+    }
+  }
+
+
+  public void loadProperties(Properties properties) {
+
+    for (Map.Entry<Object, Object> e : properties.entrySet()) {
+
+      this.properties.put(e.getKey().toString(), e.getValue().toString());
+    }
+  }
+
+
+  public Boolean getBooleanProperty(String key) {
+    return Boolean.valueOf(properties.get(key));
+  }
+
+
+  public Double getDoubleProperty(String key) {
+    Double d = 0.0;
+
+    try {
+      d = Double.valueOf(properties.get(key));
+    } catch (Exception e) {
+      LOGGER.trace("No defined value for " + key + "Defaulting to '0.0'");
+    }
+    return d;
+  }
+
+
+  public Integer getIntProperty(String key) {
+    Integer i = 0;
+
+    try {
+      i = Integer.valueOf(properties.get(key));
+    } catch (Exception e) {
+      LOGGER.trace("No defined value for " + key + "Defaulting to '0'");
+    }
+    return i;
+  }
+
+
+  public String getStringProperty(String key) {
+    String s = String.valueOf(properties.get(key));
+    return "null".equals(s) ? "" : s;
+  }
+
+
+  public Boolean isPropertyValuePresent(String key) {
+    return properties.get(key) == null || "".equals(properties.get(key).trim())
+        ? Boolean.FALSE
+        : Boolean.TRUE;
+  }
+
+
+  public Boolean isTodayEnabled(Clock clock) {
     LocalDateTime ldt = LocalDateTime.now(clock.withZone(ZoneId.systemDefault()));
     DayOfWeek today = ldt.getDayOfWeek();
     List<String> days;
@@ -39,7 +100,7 @@ public interface ChaosProperties {
     return days.contains(today.toString());
   }
 
-  default Boolean isThisHourEnabled(Clock clock) {
+  public Boolean isThisHourEnabled(Clock clock) {
     LocalDateTime ldt = LocalDateTime.now(clock.withZone(ZoneId.systemDefault()));
     Integer hour = ldt.getHour();
     List<String> hours;
@@ -52,11 +113,11 @@ public interface ChaosProperties {
     return hours.contains(hour.toString());
   }
 
-  default Boolean isAttackEnabled(ChaosAttack attack) {
+  public Boolean isAttackEnabled(ChaosAttack attack) {
     return getBooleanProperty(attack.getAttackEnabledKey());
   }
 
-  default Boolean shouldAttackRun(ChaosAttack attack, Clock clock) {
+  public Boolean shouldAttackRun(ChaosAttack attack, Clock clock) {
     if (!getBooleanProperty(SimpleChaosConstants.ENABLED)) {
       return false;
     }

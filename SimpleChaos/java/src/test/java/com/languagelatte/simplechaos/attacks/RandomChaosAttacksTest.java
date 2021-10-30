@@ -9,7 +9,6 @@ import com.languagelatte.simplechaos.attacks.attack.ExceptionAttack;
 import com.languagelatte.simplechaos.attacks.attack.JvmCrashAttack;
 import com.languagelatte.simplechaos.attacks.attack.LatencyAttack;
 import com.languagelatte.simplechaos.properties.ChaosProperties;
-import com.languagelatte.simplechaos.properties.ChaosPropertiesDefaultImpl;
 import com.languagelatte.simplechaos.properties.SimpleChaosConstants;
 import com.languagelatte.simplechaos.reports.ConsoleLogReporter;
 import java.time.Clock;
@@ -25,7 +24,7 @@ public class RandomChaosAttacksTest {
   ExceptionAttack exceptionAttack;
   LatencyAttack latencyAttack;
   ErrorAttack errorAttack;
-  JvmCrashAttack jvmcrashAttack;
+  JvmCrashAttack jvmCrashAttack;
 
   @BeforeEach
   public void beforeAll() {
@@ -33,13 +32,14 @@ public class RandomChaosAttacksTest {
     exceptionAttack = mock(ExceptionAttack.class);
     latencyAttack = mock(LatencyAttack.class);
     errorAttack = mock(ErrorAttack.class);
-    jvmcrashAttack = mock(JvmCrashAttack.class);
+    jvmCrashAttack = mock(JvmCrashAttack.class);
+    ChaosProperties.INSTANCE.clearProperties();
   }
 
   @Test
   public void exceptionAttackEnabledTest() {
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
 
     props.put(SimpleChaosConstants.ENABLED, "true");
@@ -59,7 +59,7 @@ public class RandomChaosAttacksTest {
             properties,
             exceptionAttack,
             latencyAttack,
-            jvmcrashAttack,
+            jvmCrashAttack,
             errorAttack,
             Clock.system(ZoneId.systemDefault()));
 
@@ -67,14 +67,14 @@ public class RandomChaosAttacksTest {
     verify(consoleLogReporter).reportAttack(ChaosAttack.EXCEPTION);
     verify(exceptionAttack).attack(properties);
     verifyNoInteractions(latencyAttack);
-    verifyNoInteractions(jvmcrashAttack);
+    verifyNoInteractions(jvmCrashAttack);
     verifyNoInteractions(errorAttack);
   }
 
   @Test
   public void exceptionAttackNotEnabledTest() {
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
 
     props.put(SimpleChaosConstants.ENABLED, "true");
@@ -93,7 +93,7 @@ public class RandomChaosAttacksTest {
             properties,
             exceptionAttack,
             latencyAttack,
-            jvmcrashAttack,
+            jvmCrashAttack,
             errorAttack,
             Clock.system(ZoneId.systemDefault()));
 
@@ -101,14 +101,14 @@ public class RandomChaosAttacksTest {
     verifyNoInteractions(consoleLogReporter);
     verifyNoInteractions(exceptionAttack);
     verifyNoInteractions(latencyAttack);
-    verifyNoInteractions(jvmcrashAttack);
+    verifyNoInteractions(jvmCrashAttack);
     verifyNoInteractions(errorAttack);
   }
 
   @Test
   public void latencyAttackEnabledTest() {
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
 
     props.put(SimpleChaosConstants.ENABLED, "true");
@@ -128,7 +128,7 @@ public class RandomChaosAttacksTest {
             properties,
             exceptionAttack,
             latencyAttack,
-            jvmcrashAttack,
+            jvmCrashAttack,
             errorAttack,
             Clock.system(ZoneId.systemDefault()));
 
@@ -136,14 +136,14 @@ public class RandomChaosAttacksTest {
     verify(consoleLogReporter).reportAttack(ChaosAttack.LATENCY);
     verifyNoInteractions(exceptionAttack);
     verify(latencyAttack).attack(properties);
-    verifyNoInteractions(jvmcrashAttack);
+    verifyNoInteractions(jvmCrashAttack);
     verifyNoInteractions(errorAttack);
   }
 
   @Test
   public void latencyAttackNotEnabledTest() {
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
 
     props.put(SimpleChaosConstants.ENABLED, "true");
@@ -162,7 +162,7 @@ public class RandomChaosAttacksTest {
             properties,
             exceptionAttack,
             latencyAttack,
-            jvmcrashAttack,
+            jvmCrashAttack,
             errorAttack,
             Clock.system(ZoneId.systemDefault()));
 
@@ -170,14 +170,14 @@ public class RandomChaosAttacksTest {
     verifyNoInteractions(consoleLogReporter);
     verifyNoInteractions(exceptionAttack);
     verifyNoInteractions(latencyAttack);
-    verifyNoInteractions(jvmcrashAttack);
+    verifyNoInteractions(jvmCrashAttack);
     verifyNoInteractions(errorAttack);
   }
 
   @Test
   public void jvmCrashAttackEnabledTest() {
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
 
     props.put(SimpleChaosConstants.ENABLED, "true");
@@ -197,7 +197,7 @@ public class RandomChaosAttacksTest {
             properties,
             exceptionAttack,
             latencyAttack,
-            jvmcrashAttack,
+            jvmCrashAttack,
             errorAttack,
             Clock.system(ZoneId.systemDefault()));
 
@@ -205,14 +205,14 @@ public class RandomChaosAttacksTest {
     verify(consoleLogReporter).reportAttack(ChaosAttack.JVMCRASH);
     verifyNoInteractions(exceptionAttack);
     verifyNoInteractions(latencyAttack);
-    verify(jvmcrashAttack).attack(properties);
+    verify(jvmCrashAttack).attack(properties);
     verifyNoInteractions(errorAttack);
   }
 
   @Test
   public void jvmCrashAttackNotEnabledTest() {
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
 
     props.put(SimpleChaosConstants.ENABLED, "true");
@@ -231,7 +231,7 @@ public class RandomChaosAttacksTest {
             properties,
             exceptionAttack,
             latencyAttack,
-            jvmcrashAttack,
+            jvmCrashAttack,
             errorAttack,
             Clock.system(ZoneId.systemDefault()));
 
@@ -239,14 +239,14 @@ public class RandomChaosAttacksTest {
     verifyNoInteractions(consoleLogReporter);
     verifyNoInteractions(exceptionAttack);
     verifyNoInteractions(latencyAttack);
-    verifyNoInteractions(jvmcrashAttack);
+    verifyNoInteractions(jvmCrashAttack);
     verifyNoInteractions(errorAttack);
   }
 
   @Test
   public void errorAttackEnabledTest() {
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
 
     props.put(SimpleChaosConstants.ENABLED, "true");
@@ -266,7 +266,7 @@ public class RandomChaosAttacksTest {
             properties,
             exceptionAttack,
             latencyAttack,
-            jvmcrashAttack,
+            jvmCrashAttack,
             errorAttack,
             Clock.system(ZoneId.systemDefault()));
 
@@ -274,7 +274,7 @@ public class RandomChaosAttacksTest {
     verify(consoleLogReporter).reportAttack(ChaosAttack.ERROR);
     verifyNoInteractions(exceptionAttack);
     verifyNoInteractions(latencyAttack);
-    verifyNoInteractions(jvmcrashAttack);
+    verifyNoInteractions(jvmCrashAttack);
     verify(errorAttack).attack(properties);
     ;
   }
@@ -282,7 +282,7 @@ public class RandomChaosAttacksTest {
   @Test
   public void errorAttackNotEnabledTest() {
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
 
     props.put(SimpleChaosConstants.ENABLED, "true");
@@ -301,7 +301,7 @@ public class RandomChaosAttacksTest {
             properties,
             exceptionAttack,
             latencyAttack,
-            jvmcrashAttack,
+            jvmCrashAttack,
             errorAttack,
             Clock.system(ZoneId.systemDefault()));
 
@@ -309,7 +309,7 @@ public class RandomChaosAttacksTest {
     verifyNoInteractions(consoleLogReporter);
     verifyNoInteractions(exceptionAttack);
     verifyNoInteractions(latencyAttack);
-    verifyNoInteractions(jvmcrashAttack);
+    verifyNoInteractions(jvmCrashAttack);
     verifyNoInteractions(errorAttack);
   }
 }

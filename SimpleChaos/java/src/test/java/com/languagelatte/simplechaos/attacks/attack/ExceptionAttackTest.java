@@ -1,12 +1,20 @@
 package com.languagelatte.simplechaos.attacks.attack;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.languagelatte.simplechaos.properties.ChaosPropertiesDefaultImpl;
+import com.languagelatte.simplechaos.properties.ChaosProperties;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ExceptionAttackTest {
+
+  @BeforeEach
+  public void beforeEach(){
+    ChaosProperties.INSTANCE.clearProperties();
+  }
+
   @Test()
   public void attackTest() {
 
@@ -14,7 +22,7 @@ public class ExceptionAttackTest {
 
     Exception exception =
         assertThrows(
-            Exception.class, () -> exceptionAttack.attack(new ChaosPropertiesDefaultImpl()));
+            Exception.class, () -> exceptionAttack.attack(ChaosProperties.INSTANCE));
     assertEquals("Chaos Attack Exception", exception.getMessage());
   }
 }

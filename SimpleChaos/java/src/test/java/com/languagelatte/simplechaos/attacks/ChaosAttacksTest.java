@@ -10,7 +10,6 @@ import com.languagelatte.simplechaos.attacks.attack.ExceptionAttack;
 import com.languagelatte.simplechaos.attacks.attack.JvmCrashAttack;
 import com.languagelatte.simplechaos.attacks.attack.LatencyAttack;
 import com.languagelatte.simplechaos.properties.ChaosProperties;
-import com.languagelatte.simplechaos.properties.ChaosPropertiesDefaultImpl;
 import com.languagelatte.simplechaos.properties.SimpleChaosConstants;
 import com.languagelatte.simplechaos.reports.ConsoleLogReporter;
 import java.time.Clock;
@@ -26,7 +25,7 @@ public class ChaosAttacksTest {
   ExceptionAttack exceptionAttack;
   LatencyAttack latencyAttack;
   ErrorAttack errorAttack;
-  JvmCrashAttack jvmcrashAttack;
+  JvmCrashAttack jvmCrashAttack;
 
   @BeforeEach
   public void beforeAll() {
@@ -34,13 +33,14 @@ public class ChaosAttacksTest {
     exceptionAttack = mock(ExceptionAttack.class);
     latencyAttack = mock(LatencyAttack.class);
     errorAttack = mock(ErrorAttack.class);
-    jvmcrashAttack = mock(JvmCrashAttack.class);
+    jvmCrashAttack = mock(JvmCrashAttack.class);
+    ChaosProperties.INSTANCE.clearProperties();
   }
 
   @Test
   public void randomAttackTest() {
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
 
     props.put(SimpleChaosConstants.ENABLED, "true");
@@ -71,25 +71,25 @@ public class ChaosAttacksTest {
             properties,
             exceptionAttack,
             latencyAttack,
-            jvmcrashAttack,
+            jvmCrashAttack,
             errorAttack,
             Clock.system(ZoneId.systemDefault()));
 
-    // Kind of a wierd test. 100 calls should reach all methods.
+    // Kind of a weird test. 100 calls should reach all methods.
     for (int x = 0; x < 100; x++) {
       r.randomAttack(properties);
     }
 
     verify(exceptionAttack, atLeastOnce()).attack(properties);
     verify(latencyAttack, atLeastOnce()).attack(properties);
-    verify(jvmcrashAttack, atLeastOnce()).attack(properties);
+    verify(jvmCrashAttack, atLeastOnce()).attack(properties);
     verify(errorAttack, atLeastOnce()).attack(properties);
   }
 
   @Test
   public void randomNotEnabledAttackTest() {
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
 
     props.put(SimpleChaosConstants.ENABLED, "true");
@@ -109,18 +109,18 @@ public class ChaosAttacksTest {
             properties,
             exceptionAttack,
             latencyAttack,
-            jvmcrashAttack,
+            jvmCrashAttack,
             errorAttack,
             Clock.system(ZoneId.systemDefault()));
 
-    // Kind of a wierd test. 100 calls should reach all methods.
+    // Kind of a weird test. 100 calls should reach all methods.
     for (int x = 0; x < 100; x++) {
       r.randomAttack(properties);
     }
 
     verify(exceptionAttack, never()).attack(properties);
     verify(latencyAttack, never()).attack(properties);
-    verify(jvmcrashAttack, never()).attack(properties);
+    verify(jvmCrashAttack, never()).attack(properties);
     verify(errorAttack, never()).attack(properties);
   }
 }

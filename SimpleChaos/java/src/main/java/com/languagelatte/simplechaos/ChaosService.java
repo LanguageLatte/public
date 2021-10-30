@@ -18,12 +18,10 @@ import java.util.Properties;
 
 public class ChaosService implements ChaosAttacks {
 
-  private final ChaosProperties chaosProperties;
+  private final ChaosProperties chaosProperties = ChaosProperties.INSTANCE;
   private final ChaosAttacks chaosAttacks;
 
-  public ChaosService(ChaosProperties chaosProperties) {
-
-    this.chaosProperties = chaosProperties;
+  public ChaosService() {
 
     String reporterImplClassName =
         chaosProperties.getStringProperty(SimpleChaosConstants.REPORTER_CLASS);
@@ -32,7 +30,7 @@ public class ChaosService implements ChaosAttacks {
     Reporter reporter;
     ChaosAttacks chaosAttacks;
 
-    // Try to instiantiate reporter
+    // Try to instantiate reporter
     try {
       Class<?> reporterClass = Class.forName(reporterImplClassName);
       Constructor<?> constructor = reporterClass.getConstructor();
@@ -41,7 +39,7 @@ public class ChaosService implements ChaosAttacks {
       reporter = new ConsoleLogReporter();
     }
 
-    // Try to instiantiate chaosAttacks
+    // Try to instantiate chaosAttacks
     try {
       Class<?> chaosAttacksClass = Class.forName(chaosAttacksImplClassName);
       Constructor<?> constructor =

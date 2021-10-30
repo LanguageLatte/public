@@ -36,7 +36,7 @@ public class LatencyAttack implements Attack {
       LOGGER.info("Starting Latency Attack. Will run for " + latency + "milliseconds");
       Thread.sleep((long) latency);
     } catch (Exception e) {
-      LOGGER.info("Latency Attack was intrupted.");
+      LOGGER.info("Latency Attack was interrupted.");
     }
   }
 }

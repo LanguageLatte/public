@@ -1,16 +1,24 @@
 package com.languagelatte.simplechaos.attacks.attack;
 
-import static org.junit.Assert.assertTrue;
-
 import com.languagelatte.simplechaos.properties.ChaosProperties;
-import com.languagelatte.simplechaos.properties.ChaosPropertiesDefaultImpl;
 import com.languagelatte.simplechaos.properties.SimpleChaosConstants;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Ignore;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class LatencyAttackTest {
+
+
+  @BeforeEach
+  public void beforeEach(){
+    ChaosProperties.INSTANCE.clearProperties();
+  }
 
   @Test
   public void testLatency1000() {
@@ -18,7 +26,7 @@ public class LatencyAttackTest {
     Integer min = 1000;
     Integer max = 1000;
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
     props.put(SimpleChaosConstants.LATENCY_ATTACK_MINTIME, min.toString());
     props.put(SimpleChaosConstants.LATENCY_ATTACK_MAXTIME, max.toString());
@@ -39,7 +47,7 @@ public class LatencyAttackTest {
     Integer min = 0;
     Integer max = 0;
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
     props.put(SimpleChaosConstants.LATENCY_ATTACK_MINTIME, min.toString());
     props.put(SimpleChaosConstants.LATENCY_ATTACK_MAXTIME, max.toString());
@@ -61,7 +69,7 @@ public class LatencyAttackTest {
     Integer min = 1000;
     Integer max = 100;
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
     props.put(SimpleChaosConstants.LATENCY_ATTACK_MINTIME, min.toString());
     props.put(SimpleChaosConstants.LATENCY_ATTACK_MAXTIME, max.toString());
@@ -77,10 +85,10 @@ public class LatencyAttackTest {
   }
 
   @Test
-  @Ignore
+  @Disabled
   public void testDefault() {
 
-    ChaosProperties properties = new ChaosPropertiesDefaultImpl();
+    ChaosProperties properties = ChaosProperties.INSTANCE;
     Map<String, String> props = new HashMap<>();
     properties.loadProperties(props);
 

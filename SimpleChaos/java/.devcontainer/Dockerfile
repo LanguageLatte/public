@@ -1,8 +1,8 @@
-FROM ubuntu
-RUN apt-get update
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
-RUN apt-get -qq -y install curl wget unzip zip
-RUN curl -s "https://get.sdkman.io" | bash
-RUN /bin/bash -c "source /root/.sdkman/bin/sdkman-init.sh; \
-	sdk install java; \
+FROM ubuntu:20.04
+RUN apt-get update && \
+	rm /bin/sh && ln -s /bin/bash /bin/sh && \
+	apt-get -qq -y install curl wget unzip zip && \
+	curl -s "https://get.sdkman.io" | bash && \
+	/bin/bash -c "source /root/.sdkman/bin/sdkman-init.sh; \
+	sdk install java 17.0.1-tem; \
 	sdk install maven"
