@@ -32,7 +32,8 @@ hs_err_pid*
 *.classpath
 *.factorypath
 
-
+*javac.*.args
+*.vscode
 
 # Intellij
 # User-specific stuff
