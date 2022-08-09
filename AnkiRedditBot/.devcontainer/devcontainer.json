@@ -1,0 +1,17 @@
+{
+  "name": "AnkiRedditBot",
+  "dockerFile" : "Dockerfile",
+
+  "settings": {},
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+  "workspaceFolder": "/workspace",
+
+  "extensions": [
+    "streetsidesoftware.code-spell-checker",
+    "ms-python.python",
+    "ms-python.vscode-pylance"
+  ],
+  "postStartCommand": "bash -c 'pip install --upgrade pip && pip install praw'",
+
+  "forwardPorts": [3000]
+}
