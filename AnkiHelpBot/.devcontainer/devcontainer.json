@@ -1,5 +1,5 @@
 {
-  "name": "AnkiRedditBot",
+  "name": "AnkiHelpBot",
   "dockerFile" : "Dockerfile",
 
   "settings": {},
