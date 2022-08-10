@@ -1,3 +1,10 @@
 # AnkiHelpBot
 
-A bot to help answer questions on r/Anki. Currently just posts a generic help message to posts with a flair of `Question` False positive rate is fairly high.
+A bot to help answer questions related to Anki 
+
+* Only posts on r/Anki
+* Only responds to posts with a flair of `Question`
+
+
+List of possible responses.
+* [Base Response](replies/baseReply.md)
