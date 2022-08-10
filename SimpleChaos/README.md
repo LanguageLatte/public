@@ -2,18 +2,17 @@
 
 ## Table of Contents
 
-1. [What is Chaos Testing](#what-is-chaos-testing)
-1. [What is SimpleChaos](#what-is-simplechaos)
-    * [Sub Projects](#sub-projects)
-        * Java
-        * Spring
-        * Spring-AOP
-1. [Use Cases](#use-cases)
-1. [Why SimpleChaos](#why-simplechaos)
-1. [ChaosAttacks](#chaosattacks)
-1. [Demo Projects](#demo-projects)
-1. [Versioning](#versioning)
-1. [Contributing](#contributing)
+- [Simple Chaos](#simple-chaos)
+  - [Table of Contents](#table-of-contents)
+  - [What is Chaos Testing](#what-is-chaos-testing)
+  - [What is SimpleChaos](#what-is-simplechaos)
+    - [Sub Projects](#sub-projects)
+  - [Use Cases](#use-cases)
+  - [Why SimpleChaos](#why-simplechaos)
+    - [ChaosAttacks](#chaosattacks)
+  - [Demo Projects](#demo-projects)
+  - [Versioning](#versioning)
+  - [Contributing](#contributing)
 
 ## What is Chaos Testing
 
@@ -123,7 +122,6 @@ There are a few demo application for using SimpleChaos. They are located in the 
 
 * [Java demo](demo-applications/java-demo/README.md)
 * [Spring demo](demo-applications/spring-demo/README.md)
-* [Spring-AOP demo](demo-applications/spring-aop-demo/README.md)
 * [Kotlin-Spring demo](demo-applications/kotlin-spring-demo/README.md)
 * Kotlin and Scala examples coming soon.
 
