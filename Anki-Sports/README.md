@@ -21,7 +21,8 @@ python CombineCSV.py
 ```
 
 ## Releases
-* 0.2 - Adds the sport/league to cards for clarity. 
+* 0.3 - Grammar Fix.
+* 0.2 - Adds the sport/league to cards for clarity.
 * 0.1 - Contains basic team info for the NBA, NFL, MLB, MLS, and NHL.
 
 ## Contributing

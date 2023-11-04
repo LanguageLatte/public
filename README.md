@@ -1,7 +1,7 @@
-# Language Latte
-
-You are probably looking for the SimpleChaos [Readme](SimpleChaos/README.md). 
+# LanguageLatte
 
 ## Public Projects
 
-* Simple Chaos
+* [Simple Chaos](SimpleChaos/README.md)
+* [AnkiHelpBot](AnkiHelpBot/README.md)
+* [Anki Sports](Anki-Sports/README.md)
