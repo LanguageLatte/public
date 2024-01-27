@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.languagelatte</groupId>
+  <artifactId>algorithms-and-data-structures</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <java.version>17</java.version>
+    <argLine.xmx>1024m</argLine.xmx>
+    <formatter.goal>format</formatter.goal>
+
+    <argLine>
+        --add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
+        --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
+        --add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED
+        --add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED
+        --add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED
+        --add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
+        --add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
+        --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
+        --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
+        --add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED
+    </argLine>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jetbrains</groupId>
+        <artifactId>annotations</artifactId>
+        <version>16.0.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.7.0</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.jetbrains</groupId>
+      <artifactId>annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <licenses>
+    <license>
+        <name>GNU LGPLv3</name>
+        <url>https://choosealicense.com/licenses/lgpl-3.0/</url>
+    </license>
+</licenses>
+
+<developers>
+    <developer>
+        <name>Michael Nolan</name>
+        <email>https://github.com/LanguageLatte/public</email>
+        <organization>NobleHouse</organization>
+        <organizationUrl>https://github.com/LanguageLatte/public</organizationUrl>
+    </developer>
+</developers>
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.22.2</version>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.10.1</version>
+            <configuration>
+                <annotationProcessorPaths>
+                    <path>
+                        <groupId>com.google.errorprone</groupId>
+                        <artifactId>error_prone_core</artifactId>
+                        <version>2.24.1</version>
+                    </path>
+                    <path>
+                        <groupId>com.uber.nullaway</groupId>
+                        <artifactId>nullaway</artifactId>
+                        <version>0.10.19</version>
+                    </path>
+                </annotationProcessorPaths>
+                <compilerArgs>
+                    <arg>--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</arg>
+                    <arg>--add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+                    <arg>--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
+                    <arg>--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+                    <arg>--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
+                    <arg>--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+                    <arg>--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+                    <arg>-Xmaxerrs</arg>
+                    <arg>100</arg>
+                    <arg>-Xmaxwarns</arg>
+                    <arg>100</arg>
+                    <arg>-Xlint:all</arg>
+                    <arg>-Xlint:-processing</arg>
+                    <arg>-Werror</arg>
+                    <arg>-XDcompilePolicy=simple</arg>
+                    <arg>-Xplugin:ErrorProne -Xep:NullAway:ERROR -XepOpt:NullAway:AnnotatedPackages=com.languagelatte</arg>
+                </compilerArgs>
+                <parameters>true</parameters>
+                <source>17</source>
+                <target>17</target>
+                <useIncrementalCompilation>false</useIncrementalCompilation>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>com.spotify.fmt</groupId>
+            <artifactId>fmt-maven-plugin</artifactId>
+            <version>2.21.1</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>${formatter.goal}</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+    <pluginManagement>
+        <plugins>
+        </plugins>
+    </pluginManagement>
+</build>
+
+<profiles>
+    <profile>
+        <id>formatter</id>
+        <properties>
+            <formatter.goal>check</formatter.goal>
+        </properties>
+    </profile>
+</profiles>
+</project>
