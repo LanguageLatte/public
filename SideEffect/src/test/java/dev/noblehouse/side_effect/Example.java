@@ -1,7 +1,7 @@
-package dev.noblehouse.side_effect;
+package com.languagelatte.side_effect;
 
-import dev.noblehouse.side_effect.annotations.SideEffect;
-import dev.noblehouse.side_effect.annotations.SideEffectIgnore;
+import com.languagelatte.side_effect.annotations.SideEffect;
+import com.languagelatte.side_effect.annotations.SideEffectIgnore;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package dev.noblehouse.side_effect;
+package com.languagelatte.side_effect;
 
 import static com.google.errorprone.BugPattern.SeverityLevel.WARNING;
 import static com.google.errorprone.matchers.Matchers.anyOf;
@@ -52,9 +52,10 @@ public final class SideEffectChecker extends BugChecker implements MethodTreeMat
 
     boolean isMethodMarkedAsPure =
         ASTHelpers.hasAnnotation(
-            tree, "dev.noblehouse.side_effect.annotations.SideEffectIgnore", state);
+            tree, "com.languagelatte.side_effect.annotations.SideEffectIgnore", state);
     boolean isMethodMarkedAsSideEffect =
-        ASTHelpers.hasAnnotation(tree, "dev.noblehouse.side_effect.annotations.SideEffect", state);
+        ASTHelpers.hasAnnotation(
+            tree, "com.languagelatte.side_effect.annotations.SideEffect", state);
 
     // If the method is already annotated with @SideEffect, then we can exit early. (Future idea, If
     // this plugin becomes very mature, then we should still process. If we don't find a side
@@ -103,7 +104,7 @@ public final class SideEffectChecker extends BugChecker implements MethodTreeMat
 
       if (ASTHelpers.hasAnnotation(
           ASTHelpers.getSymbol(methodInvocationTree),
-          "dev.noblehouse.side_effect.annotations.SideEffect",
+          "com.languagelatte.side_effect.annotations.SideEffect",
           state)) {
         errors.add("Should be annotated because it calls a impure function");
       } else if (ALL_KNOWN_THIRD_PARTY_IMPURE_METHODS.matches(methodInvocationTree, state)) {

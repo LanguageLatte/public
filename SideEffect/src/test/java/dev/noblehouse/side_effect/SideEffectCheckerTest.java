@@ -1,4 +1,4 @@
-package dev.noblehouse.side_effect;
+package com.languagelatte.side_effect;
 
 import com.google.errorprone.CompilationTestHelper;
 import org.junit.Test;
@@ -45,7 +45,7 @@ public class SideEffectCheckerTest {
     helper
         .addSourceLines(
             "TestClass.java",
-            "import dev.noblehouse.side_effect.annotations.SideEffect;",
+            "import com.languagelatte.side_effect.annotations.SideEffect;",
             "public class TestClass {",
             "   @SideEffect public double f1() {",
             "       double w = Math.random(); ",
@@ -60,7 +60,7 @@ public class SideEffectCheckerTest {
     helper
         .addSourceLines(
             "TestClass.java",
-            "import dev.noblehouse.side_effect.annotations.SideEffectIgnore;",
+            "import com.languagelatte.side_effect.annotations.SideEffectIgnore;",
             "public class TestClass {",
             "   @SideEffectIgnore public double f1() {",
             "       double w = Math.random(); ",
@@ -75,7 +75,7 @@ public class SideEffectCheckerTest {
     helper
         .addSourceLines(
             "TestClass.java",
-            "import dev.noblehouse.side_effect.annotations.SideEffect;",
+            "import com.languagelatte.side_effect.annotations.SideEffect;",
             "public class TestClass {",
             "   // BUG: Diagnostic contains: Method should be annotated because it calls a impure function",
             "   public void f1() {var w = f2();}",
@@ -89,7 +89,7 @@ public class SideEffectCheckerTest {
     helper
         .addSourceLines(
             "TestClass.java",
-            "import dev.noblehouse.side_effect.annotations.SideEffect;",
+            "import com.languagelatte.side_effect.annotations.SideEffect;",
             "public class TestClass {",
             "   // BUG: Diagnostic contains: Method should be annotated because it calls a impure function",
             "   public void f1() {f2();}",
@@ -103,7 +103,7 @@ public class SideEffectCheckerTest {
     helper
         .addSourceLines(
             "TestClass.java",
-            "import dev.noblehouse.side_effect.annotations.SideEffect;",
+            "import com.languagelatte.side_effect.annotations.SideEffect;",
             "public class TestClass {",
             "   @SideEffect public void f1() {f2();}",
             "   @SideEffect public void f2() {}",
@@ -116,8 +116,8 @@ public class SideEffectCheckerTest {
     helper
         .addSourceLines(
             "TestClass.java",
-            "import dev.noblehouse.side_effect.annotations.SideEffect;",
-            "import dev.noblehouse.side_effect.annotations.SideEffectIgnore;",
+            "import com.languagelatte.side_effect.annotations.SideEffect;",
+            "import com.languagelatte.side_effect.annotations.SideEffectIgnore;",
             "public class TestClass {",
             "   @SideEffectIgnore public void f1() {f2();}",
             "   @SideEffect public void f2() {}",
