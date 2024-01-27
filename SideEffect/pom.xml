@@ -2,7 +2,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>dev.noblehouse</groupId>
+    <groupId>com.languagelatte</groupId>
     <artifactId>side-effect</artifactId>
     <version>0.0.1</version>
     <packaging>jar</packaging>
@@ -83,7 +83,7 @@
                         <arg>-Xlint:-processing</arg>
                         <arg>-Werror</arg>
                         <arg>-XDcompilePolicy=simple</arg>
-                        <arg>-Xplugin:ErrorProne -Xep:NullAway:ERROR -XepOpt:NullAway:AnnotatedPackages=dev.noblehouse</arg>
+                        <arg>-Xplugin:ErrorProne -Xep:NullAway:ERROR -XepOpt:NullAway:AnnotatedPackages=com.languagelatte</arg>
                     </compilerArgs>
                     <parameters>true</parameters>
                     <source>17</source>
