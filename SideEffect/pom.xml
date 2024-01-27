@@ -9,7 +9,7 @@
 
     <name>SideEffect</name>
     <description></description>
-    <url>https://github.com/NobleHouseDev/public</url>
+    <url>https://github.com/LanguageLatte/public</url>
 
     <licenses>
         <license>
@@ -21,9 +21,9 @@
     <developers>
         <developer>
             <name>Michael Nolan</name>
-            <email>https://github.com/NobleHouseDev/public</email>
+            <email>https://github.com/LanguageLatte/public</email>
             <organization>NobleHouse</organization>
-            <organizationUrl>https://github.com/NobleHouseDev/public</organizationUrl>
+            <organizationUrl>https://github.com/LanguageLatte/public</organizationUrl>
         </developer>
     </developers>
 
