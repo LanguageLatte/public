@@ -8,10 +8,12 @@ import static com.google.errorprone.matchers.Matchers.staticMethod;
 import com.google.errorprone.BugPattern;
 import com.google.errorprone.VisitorState;
 import com.google.errorprone.bugpatterns.BugChecker;
+import com.google.errorprone.bugpatterns.BugChecker.ClassTreeMatcher;
 import com.google.errorprone.bugpatterns.BugChecker.MethodTreeMatcher;
 import com.google.errorprone.matchers.Description;
 import com.google.errorprone.matchers.Matcher;
 import com.google.errorprone.util.ASTHelpers;
+import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.ExpressionStatementTree;
 import com.sun.source.tree.ExpressionTree;
 import com.sun.source.tree.IdentifierTree;
@@ -20,6 +22,7 @@ import com.sun.source.tree.MethodInvocationTree;
 import com.sun.source.tree.MethodTree;
 import com.sun.source.tree.ReturnTree;
 import com.sun.source.tree.StatementTree;
+import com.sun.source.tree.Tree;
 import com.sun.source.tree.VariableTree;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -30,7 +33,8 @@ import java.util.Set;
     summary = "Method should be annotated because it calls a impure function",
     explanation = "Method should be annotated because it calls a impure function",
     severity = WARNING)
-public final class SideEffectChecker extends BugChecker implements MethodTreeMatcher {
+public final class SideEffectChecker extends BugChecker
+    implements MethodTreeMatcher, ClassTreeMatcher {
 
   private static final Matcher<ExpressionTree> JAVA_LANG_MATH_RANDOM =
       staticMethod().onClass("java.lang.Math").named("random");
@@ -76,6 +80,7 @@ public final class SideEffectChecker extends BugChecker implements MethodTreeMat
 
       } else if (stmt instanceof ReturnTree rt) {
         ExpressionTree aaa = rt.getExpression();
+        var kind = aaa.getKind();
         errors.addAll(evaluateExpressionTree(aaa, state, localVars));
 
       } else if (stmt instanceof ExpressionStatementTree et) {
@@ -85,6 +90,37 @@ public final class SideEffectChecker extends BugChecker implements MethodTreeMat
     }
 
     return errors.isEmpty() ? Description.NO_MATCH : buildDescription(tree).build();
+  }
+
+  @Override
+  public Description matchClass(ClassTree tree, VisitorState state) {
+    List<String> errors = new ArrayList<>();
+    // Empty set, there are no localVars here.
+    Set<String> localVars = new HashSet<>();
+
+    var members = tree.getMembers();
+    for (Tree member : members) {
+      if (member instanceof VariableTree vt) {
+
+        boolean isMethodMarkedAsPure =
+            ASTHelpers.hasAnnotation(
+                vt, "com.languagelatte.side_effect.annotations.SideEffectIgnore", state);
+        boolean isMethodMarkedAsSideEffect =
+            ASTHelpers.hasAnnotation(
+                vt, "com.languagelatte.side_effect.annotations.SideEffect", state);
+
+        if (isMethodMarkedAsSideEffect || isMethodMarkedAsPure) {
+          continue;
+        }
+
+        errors.addAll(evaluateExpressionTree(vt.getInitializer(), state, localVars));
+        if (!errors.isEmpty()) {
+          return buildDescription(vt).build();
+        }
+      }
+    }
+
+    return Description.NO_MATCH;
   }
 
   private List<String> evaluateExpressionTree(
@@ -112,6 +148,13 @@ public final class SideEffectChecker extends BugChecker implements MethodTreeMat
       } else if (!localVars.contains(variable)
           && ALL_KNOWN_THIRD_PARTY_CONTEXT_DEPENDENT_IMPURE_METHODS.matches(
               methodInvocationTree, state)) {
+        errors.add("Should be annotated because it calls a impure function");
+      }
+    } else if (expressionTree instanceof MemberSelectTree memberSelectTree) {
+      if (ASTHelpers.hasAnnotation(
+          ASTHelpers.getSymbol(memberSelectTree),
+          "com.languagelatte.side_effect.annotations.SideEffect",
+          state)) {
         errors.add("Should be annotated because it calls a impure function");
       }
     }

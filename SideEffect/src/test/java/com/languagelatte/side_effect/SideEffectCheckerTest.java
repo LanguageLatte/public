@@ -171,4 +171,62 @@ public class SideEffectCheckerTest {
             "}")
         .doTest();
   }
+
+  @Test
+  public void classVariableThatIsImpure() {
+    helper
+        .addSourceLines(
+            "TestClass.java",
+            "public class TestClass {",
+            "   // BUG: Diagnostic contains: Method should be annotated because it calls a impure function",
+            "   double x = Math.random();",
+            "}")
+        .doTest();
+  }
+
+  @Test
+  public void classVariableThatIsImpureIsAnnotatedWithSideEffect() {
+    helper
+        .addSourceLines(
+            "TestClass.java",
+            "import com.languagelatte.side_effect.annotations.SideEffect;",
+            "public class TestClass {",
+            "   @SideEffect double x = Math.random();",
+            "}")
+        .doTest();
+  }
+
+  @Test
+  public void usesClassVariableThatIsImpure() {
+    helper
+        .addSourceLines(
+            "TestClass.java",
+            "import com.languagelatte.side_effect.annotations.SideEffect;",
+            "public class TestClass {",
+            "   @SideEffect double x = Math.random();",
+            "   // BUG: Diagnostic contains: Method should be annotated because it calls a impure function",
+            "   public double f1() {",
+            "       return this.x;",
+            "   }",
+            "}")
+        .doTest();
+  }
+
+  // TODO - Test fails.
+  //   @Test
+  //   public void usesClassVariableThatIsImpure2() {
+  //     helper
+  //         .addSourceLines(
+  //             "TestClass.java",
+  //             "import com.languagelatte.side_effect.annotations.SideEffect;",
+  //             "public class TestClass {",
+  //             "   @SideEffect double x = Math.random();",
+  //             "   // BUG: Diagnostic contains: Method should be annotated because it calls a
+  // impure function",
+  //             "   public double f1() {",
+  //             "       return 10.0 + this.x;",
+  //             "   }",
+  //             "}")
+  //         .doTest();
+  //   }
 }
