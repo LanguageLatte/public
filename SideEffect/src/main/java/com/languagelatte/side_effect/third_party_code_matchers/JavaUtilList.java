@@ -4,8 +4,20 @@ import static com.google.errorprone.matchers.Matchers.instanceMethod;
 
 import com.google.errorprone.matchers.Matcher;
 import com.sun.source.tree.ExpressionTree;
+import java.util.List;
 
 public class JavaUtilList {
-  public static final Matcher<ExpressionTree> JAVA_UTIL_LIST_ADD =
-      instanceMethod().onDescendantOf("java.util.List").named("add");
+
+  private static final String JAVA_UTIL_LIST = "java.util.List";
+  public static final List<Matcher<ExpressionTree>> matchers =
+      List.of(
+          instanceMethod().onDescendantOf(JAVA_UTIL_LIST).named("add"),
+          instanceMethod().onDescendantOf(JAVA_UTIL_LIST).named("addAll"),
+          instanceMethod().onDescendantOf(JAVA_UTIL_LIST).named("clear"),
+          instanceMethod().onDescendantOf(JAVA_UTIL_LIST).named("remove"),
+          instanceMethod().onDescendantOf(JAVA_UTIL_LIST).named("removeAll"),
+          instanceMethod().onDescendantOf(JAVA_UTIL_LIST).named("replaceAll"),
+          instanceMethod().onDescendantOf(JAVA_UTIL_LIST).named("retainAll"),
+          instanceMethod().onDescendantOf(JAVA_UTIL_LIST).named("set"),
+          instanceMethod().onDescendantOf(JAVA_UTIL_LIST).named("sort"));
 }
