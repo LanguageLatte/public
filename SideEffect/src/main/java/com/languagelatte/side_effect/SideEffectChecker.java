@@ -1,9 +1,6 @@
 package com.languagelatte.side_effect;
 
 import static com.google.errorprone.BugPattern.SeverityLevel.WARNING;
-import static com.google.errorprone.matchers.Matchers.anyOf;
-import static com.google.errorprone.matchers.Matchers.instanceMethod;
-import static com.google.errorprone.matchers.Matchers.staticMethod;
 
 import com.google.errorprone.BugPattern;
 import com.google.errorprone.VisitorState;
@@ -11,8 +8,8 @@ import com.google.errorprone.bugpatterns.BugChecker;
 import com.google.errorprone.bugpatterns.BugChecker.ClassTreeMatcher;
 import com.google.errorprone.bugpatterns.BugChecker.MethodTreeMatcher;
 import com.google.errorprone.matchers.Description;
-import com.google.errorprone.matchers.Matcher;
 import com.google.errorprone.util.ASTHelpers;
+import com.languagelatte.side_effect.third_party_code_matchers.All;
 import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.ExpressionStatementTree;
 import com.sun.source.tree.ExpressionTree;
@@ -35,21 +32,6 @@ import java.util.Set;
     severity = WARNING)
 public final class SideEffectChecker extends BugChecker
     implements MethodTreeMatcher, ClassTreeMatcher {
-
-  private static final Matcher<ExpressionTree> JAVA_LANG_MATH_RANDOM =
-      staticMethod().onClass("java.lang.Math").named("random");
-
-  // These are ALWAYS impure. Things like network calls, file system read/write, random numbers,
-  // time.now, date.now
-  private static final Matcher<ExpressionTree> ALL_KNOWN_THIRD_PARTY_IMPURE_METHODS =
-      anyOf(JAVA_LANG_MATH_RANDOM);
-
-  private static final Matcher<ExpressionTree> JAVA_UTIL_LIST_ADD =
-      instanceMethod().onDescendantOf("java.util.List").named("add");
-
-  // These are impure when applied to a non local variable. i.e., modifying an input parameter.
-  private static final Matcher<ExpressionTree>
-      ALL_KNOWN_THIRD_PARTY_CONTEXT_DEPENDENT_IMPURE_METHODS = anyOf(JAVA_UTIL_LIST_ADD);
 
   @Override
   public Description matchMethod(MethodTree tree, VisitorState state) {
@@ -143,10 +125,10 @@ public final class SideEffectChecker extends BugChecker
           "com.languagelatte.side_effect.annotations.SideEffect",
           state)) {
         errors.add("Should be annotated because it calls a impure function");
-      } else if (ALL_KNOWN_THIRD_PARTY_IMPURE_METHODS.matches(methodInvocationTree, state)) {
+      } else if (All.ALL_KNOWN_THIRD_PARTY_IMPURE_METHODS.matches(methodInvocationTree, state)) {
         errors.add("Should be annotated because it calls a impure function");
       } else if (!localVars.contains(variable)
-          && ALL_KNOWN_THIRD_PARTY_CONTEXT_DEPENDENT_IMPURE_METHODS.matches(
+          && All.ALL_KNOWN_THIRD_PARTY_CONTEXT_DEPENDENT_IMPURE_METHODS.matches(
               methodInvocationTree, state)) {
         errors.add("Should be annotated because it calls a impure function");
       }
