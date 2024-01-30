@@ -1,19 +1,22 @@
 package com.languagelatte.side_effect;
 
 import com.google.errorprone.CompilationTestHelper;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class SideEffectCheckerTest {
+public class SideEffectTest {
 
   private final CompilationTestHelper helper =
-      CompilationTestHelper.newInstance(SideEffectChecker.class, getClass());
+      CompilationTestHelper.newInstance(SideEffect.class, getClass());
 
   @Test
   public void callsImpureFunction() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
             "public class TestClass {",
@@ -229,4 +232,8 @@ public class SideEffectCheckerTest {
   //             "}")
   //         .doTest();
   //   }
+
+  public CompilationTestHelper makeCompilationTestHelperWithArgs(List<String> args) {
+    return CompilationTestHelper.newInstance(SideEffect.class, getClass()).setArgs(args);
+  }
 }

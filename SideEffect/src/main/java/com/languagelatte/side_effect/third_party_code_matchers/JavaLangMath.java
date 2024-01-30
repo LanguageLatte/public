@@ -4,8 +4,9 @@ import static com.google.errorprone.matchers.Matchers.staticMethod;
 
 import com.google.errorprone.matchers.Matcher;
 import com.sun.source.tree.ExpressionTree;
+import java.util.List;
 
 public class JavaLangMath {
-  public static final Matcher<ExpressionTree> JAVA_LANG_MATH_RANDOM =
-      staticMethod().onClass("java.lang.Math").named("random");
+  public static final List<Matcher<ExpressionTree>> matchers =
+      List.of(staticMethod().onClass("java.lang.Math").named("random"));
 }

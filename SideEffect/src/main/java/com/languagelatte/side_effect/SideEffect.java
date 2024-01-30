@@ -3,6 +3,7 @@ package com.languagelatte.side_effect;
 import static com.google.errorprone.BugPattern.SeverityLevel.WARNING;
 
 import com.google.errorprone.BugPattern;
+import com.google.errorprone.ErrorProneFlags;
 import com.google.errorprone.VisitorState;
 import com.google.errorprone.bugpatterns.BugChecker;
 import com.google.errorprone.bugpatterns.BugChecker.ClassTreeMatcher;
@@ -25,13 +26,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.inject.Inject;
 
 @BugPattern(
     summary = "Method should be annotated because it calls a impure function",
     explanation = "Method should be annotated because it calls a impure function",
     severity = WARNING)
-public final class SideEffectChecker extends BugChecker
-    implements MethodTreeMatcher, ClassTreeMatcher {
+public final class SideEffect extends BugChecker implements MethodTreeMatcher, ClassTreeMatcher {
+
+  @Inject
+  public SideEffect(ErrorProneFlags flags) {}
 
   @Override
   public Description matchMethod(MethodTree tree, VisitorState state) {
