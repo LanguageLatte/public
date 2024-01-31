@@ -19,6 +19,7 @@ public class SideEffectTest {
             Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "public class TestClass {",
             "   // BUG: Diagnostic contains: Method should be annotated because it calls a impure function",
             "   public double f1() {",
@@ -31,9 +32,11 @@ public class SideEffectTest {
 
   @Test
   public void callsImpureFunction2() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "public class TestClass {",
             "   // BUG: Diagnostic contains: Method should be annotated because it calls a impure function",
             "   public double f1() {",
@@ -45,9 +48,11 @@ public class SideEffectTest {
 
   @Test
   public void callsImpureFunctionIsAnnotatedWithSideEffect() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "import com.languagelatte.side_effect.annotations.SideEffect;",
             "public class TestClass {",
             "   @SideEffect public double f1() {",
@@ -60,9 +65,11 @@ public class SideEffectTest {
 
   @Test
   public void callsImpureFunctionIsAnnotatedWithSideEffectIgnore() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "import com.languagelatte.side_effect.annotations.SideEffectIgnore;",
             "public class TestClass {",
             "   @SideEffectIgnore public double f1() {",
@@ -75,9 +82,11 @@ public class SideEffectTest {
 
   @Test
   public void callsAtSideEffectFunction() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "import com.languagelatte.side_effect.annotations.SideEffect;",
             "public class TestClass {",
             "   // BUG: Diagnostic contains: Method should be annotated because it calls a impure function",
@@ -89,9 +98,11 @@ public class SideEffectTest {
 
   @Test
   public void callsAtSideEffectFunction2() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "import com.languagelatte.side_effect.annotations.SideEffect;",
             "public class TestClass {",
             "   // BUG: Diagnostic contains: Method should be annotated because it calls a impure function",
@@ -103,9 +114,11 @@ public class SideEffectTest {
 
   @Test
   public void callsAtSideEffectFunctionIsAnnotatedWithSideEffect() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "import com.languagelatte.side_effect.annotations.SideEffect;",
             "public class TestClass {",
             "   @SideEffect public void f1() {f2();}",
@@ -116,9 +129,11 @@ public class SideEffectTest {
 
   @Test
   public void callsAtSideEffectFunctionIsAnnotatedWithSideEffectIgnore() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "import com.languagelatte.side_effect.annotations.SideEffect;",
             "import com.languagelatte.side_effect.annotations.SideEffectIgnore;",
             "public class TestClass {",
@@ -130,9 +145,11 @@ public class SideEffectTest {
 
   @Test
   public void mutatesLocalList() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "import java.util.ArrayList;",
             "public class TestClass {",
             "   public void f1() {",
@@ -145,9 +162,11 @@ public class SideEffectTest {
 
   @Test
   public void mutatesMethodParameterList() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "import java.util.List;",
             "public class TestClass {",
             "   // BUG: Diagnostic contains: Method should be annotated because it calls a impure function",
@@ -160,9 +179,11 @@ public class SideEffectTest {
 
   @Test
   public void mutatesClassList() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "import java.util.ArrayList;",
             "import java.util.List;",
             "public class TestClass {",
@@ -177,9 +198,11 @@ public class SideEffectTest {
 
   @Test
   public void classVariableThatIsImpure() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "public class TestClass {",
             "   // BUG: Diagnostic contains: Method should be annotated because it calls a impure function",
             "   double x = Math.random();",
@@ -189,9 +212,11 @@ public class SideEffectTest {
 
   @Test
   public void classVariableThatIsImpureIsAnnotatedWithSideEffect() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "import com.languagelatte.side_effect.annotations.SideEffect;",
             "public class TestClass {",
             "   @SideEffect double x = Math.random();",
@@ -201,9 +226,11 @@ public class SideEffectTest {
 
   @Test
   public void usesClassVariableThatIsImpure() {
-    helper
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
+            "package com.languagelatte.annotated;",
             "import com.languagelatte.side_effect.annotations.SideEffect;",
             "public class TestClass {",
             "   @SideEffect double x = Math.random();",
