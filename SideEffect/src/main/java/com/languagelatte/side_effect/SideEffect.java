@@ -22,6 +22,7 @@ import com.sun.source.tree.ReturnTree;
 import com.sun.source.tree.StatementTree;
 import com.sun.source.tree.Tree;
 import com.sun.source.tree.VariableTree;
+import com.sun.tools.javac.code.Symbol;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -34,11 +35,18 @@ import javax.inject.Inject;
     severity = WARNING)
 public final class SideEffect extends BugChecker implements MethodTreeMatcher, ClassTreeMatcher {
 
+  private final Config config;
+
   @Inject
-  public SideEffect(ErrorProneFlags flags) {}
+  public SideEffect(ErrorProneFlags flags) {
+    this.config = new Config(flags.getFlagsMap());
+  }
 
   @Override
   public Description matchMethod(MethodTree tree, VisitorState state) {
+    if (!shouldAnalyze(ASTHelpers.getSymbol(tree))) {
+      return Description.NO_MATCH;
+    }
 
     boolean isMethodMarkedAsPure =
         ASTHelpers.hasAnnotation(
@@ -80,6 +88,10 @@ public final class SideEffect extends BugChecker implements MethodTreeMatcher, C
 
   @Override
   public Description matchClass(ClassTree tree, VisitorState state) {
+    if (!shouldAnalyze(ASTHelpers.getSymbol(tree))) {
+      return Description.NO_MATCH;
+    }
+
     List<String> errors = new ArrayList<>();
     // Empty set, there are no localVars here.
     Set<String> localVars = new HashSet<>();
@@ -146,5 +158,19 @@ public final class SideEffect extends BugChecker implements MethodTreeMatcher, C
     }
 
     return errors;
+  }
+
+  private boolean shouldAnalyze(Symbol sym) {
+    var packageName = ASTHelpers.enclosingPackage(sym).getQualifiedName().toString();
+
+    if (this.config.isUnAnnotatedPackage(packageName)) {
+      return false;
+    }
+
+    if (this.config.isAnnotatedPackage(packageName)) {
+      return true;
+    }
+
+    return false;
   }
 }
