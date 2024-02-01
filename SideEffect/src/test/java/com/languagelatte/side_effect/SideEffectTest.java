@@ -4,15 +4,8 @@ import com.google.errorprone.CompilationTestHelper;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
-@RunWith(JUnit4.class)
 public class SideEffectTest {
-
-  private final CompilationTestHelper helper =
-      CompilationTestHelper.newInstance(SideEffect.class, getClass());
-
   @Test
   public void callsImpureFunction() {
     makeCompilationTestHelperWithArgs(

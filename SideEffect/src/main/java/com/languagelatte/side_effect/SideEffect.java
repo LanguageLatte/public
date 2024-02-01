@@ -1,7 +1,9 @@
 package com.languagelatte.side_effect;
 
-import static com.google.errorprone.BugPattern.SeverityLevel.WARNING;
+import static com.google.errorprone.BugPattern.SeverityLevel.ERROR;
 
+import com.google.auto.service.AutoService;
+import com.google.common.collect.ImmutableMap;
 import com.google.errorprone.BugPattern;
 import com.google.errorprone.ErrorProneFlags;
 import com.google.errorprone.VisitorState;
@@ -29,13 +31,19 @@ import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
 
+@AutoService(BugChecker.class)
 @BugPattern(
     summary = "Method should be annotated because it calls a impure function",
     explanation = "Method should be annotated because it calls a impure function",
-    severity = WARNING)
+    severity = ERROR)
 public final class SideEffect extends BugChecker implements MethodTreeMatcher, ClassTreeMatcher {
+  private static final long serialVersionUID = 1L;
 
   private final Config config;
+
+  public SideEffect() {
+    config = new Config(ImmutableMap.of());
+  }
 
   @Inject
   public SideEffect(ErrorProneFlags flags) {
@@ -66,20 +74,22 @@ public final class SideEffect extends BugChecker implements MethodTreeMatcher, C
     List<String> errors = new ArrayList<>();
     Set<String> localVars = new HashSet<>();
 
-    for (StatementTree stmt : tree.getBody().getStatements()) {
-      if (stmt instanceof VariableTree vt) {
-        localVars.add(vt.getName().toString());
-        ExpressionTree aaa = vt.getInitializer();
-        errors.addAll(evaluateExpressionTree(aaa, state, localVars));
+    if (tree.getBody() != null) {
+      for (StatementTree stmt : tree.getBody().getStatements()) {
+        if (stmt instanceof VariableTree vt) {
+          localVars.add(vt.getName().toString());
+          ExpressionTree aaa = vt.getInitializer();
+          errors.addAll(evaluateExpressionTree(aaa, state, localVars));
 
-      } else if (stmt instanceof ReturnTree rt) {
-        ExpressionTree aaa = rt.getExpression();
-        var kind = aaa.getKind();
-        errors.addAll(evaluateExpressionTree(aaa, state, localVars));
+        } else if (stmt instanceof ReturnTree rt) {
+          ExpressionTree aaa = rt.getExpression();
+          var kind = aaa.getKind();
+          errors.addAll(evaluateExpressionTree(aaa, state, localVars));
 
-      } else if (stmt instanceof ExpressionStatementTree et) {
-        ExpressionTree aaa = et.getExpression();
-        errors.addAll(evaluateExpressionTree(aaa, state, localVars));
+        } else if (stmt instanceof ExpressionStatementTree et) {
+          ExpressionTree aaa = et.getExpression();
+          errors.addAll(evaluateExpressionTree(aaa, state, localVars));
+        }
       }
     }
 
