@@ -15,7 +15,7 @@ Status | Name | Desc | Code Example
 DONE | @SideEffect | Any function, or class member, that calls a function annotated with `@SideEffect` should itself be annotated with `@SideEffect` | link
 DONE | @SideEffectIgnore | Any function, or class member, that is annotated with `@SideEffectIgnore` should be ignored.| link
 DONE | Random |Any function that calls `java.lang.Math.random` should be annotated with `@SideEffect`|link
-TODO | List | Any function that mutates an input parameter, or class member of type `java.util.List` should be annotated with `@SideEffect`| link
+DONE | List | Any function that mutates an input parameter, or class member of type `java.util.List` should be annotated with `@SideEffect`| link
 TODO | Map | Any function that mutates an input parameter, or class member of type `java.util.Map` should be annotated with `@SideEffect`| link
 TODO | Set | Any function that mutates an input parameter, or class member of type `java.util.Set` should be annotated with `@SideEffect`| link
 TODO | Queue | Any function that mutates an input parameter, or class member of type `java.util.Queue` should be annotated with `@SideEffect`| link

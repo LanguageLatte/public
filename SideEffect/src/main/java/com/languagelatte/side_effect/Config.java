@@ -1,14 +1,17 @@
 package com.languagelatte.side_effect;
 
 import com.google.common.collect.ImmutableMap;
+import java.io.Serializable;
 import java.util.Set;
 
-public final class Config {
+public final class Config implements Serializable {
+  private static final long serialVersionUID = 1L;
 
   private final Set<String> annotatedPackages;
   private final Set<String> unAnnotatedPackages;
 
   public Config(ImmutableMap<String, String> flags) {
+
     this.annotatedPackages =
         Set.of(flags.getOrDefault("SideEffect:AnnotatedPackages", "").split(","));
     this.unAnnotatedPackages =
