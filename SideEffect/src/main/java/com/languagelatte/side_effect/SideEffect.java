@@ -13,6 +13,8 @@ import com.google.errorprone.bugpatterns.BugChecker.MethodTreeMatcher;
 import com.google.errorprone.matchers.Description;
 import com.google.errorprone.util.ASTHelpers;
 import com.languagelatte.side_effect.third_party_code_matchers.All;
+import com.sun.source.tree.ArrayAccessTree;
+import com.sun.source.tree.AssignmentTree;
 import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.ExpressionStatementTree;
 import com.sun.source.tree.ExpressionTree;
@@ -23,6 +25,7 @@ import com.sun.source.tree.MethodTree;
 import com.sun.source.tree.ReturnTree;
 import com.sun.source.tree.StatementTree;
 import com.sun.source.tree.Tree;
+import com.sun.source.tree.Tree.Kind;
 import com.sun.source.tree.VariableTree;
 import com.sun.tools.javac.code.Symbol;
 import java.util.ArrayList;
@@ -76,6 +79,7 @@ public final class SideEffect extends BugChecker implements MethodTreeMatcher, C
 
     if (tree.getBody() != null) {
       for (StatementTree stmt : tree.getBody().getStatements()) {
+        var kind = stmt.getKind();
         if (stmt instanceof VariableTree vt) {
           localVars.add(vt.getName().toString());
           ExpressionTree aaa = vt.getInitializer();
@@ -83,7 +87,7 @@ public final class SideEffect extends BugChecker implements MethodTreeMatcher, C
 
         } else if (stmt instanceof ReturnTree rt) {
           ExpressionTree aaa = rt.getExpression();
-          var kind = aaa.getKind();
+          var kind2 = aaa.getKind();
           errors.addAll(evaluateExpressionTree(aaa, state, localVars));
 
         } else if (stmt instanceof ExpressionStatementTree et) {
@@ -135,6 +139,12 @@ public final class SideEffect extends BugChecker implements MethodTreeMatcher, C
       ExpressionTree expressionTree, VisitorState state, Set<String> localVars) {
 
     List<String> errors = new ArrayList<>();
+    if (expressionTree == null) {
+      return errors;
+    }
+
+    var kind = expressionTree.getKind();
+
     if (expressionTree instanceof MethodInvocationTree methodInvocationTree) {
       var a = methodInvocationTree.getMethodSelect();
       String variable = "";
@@ -164,6 +174,22 @@ public final class SideEffect extends BugChecker implements MethodTreeMatcher, C
           "com.languagelatte.side_effect.annotations.SideEffect",
           state)) {
         errors.add("Should be annotated because it calls a impure function");
+      }
+    } else if (expressionTree instanceof AssignmentTree assignmentTree) {
+      String variable = "";
+      var variableTree = assignmentTree.getVariable();
+      if (variableTree.getKind() == Kind.ARRAY_ACCESS) {
+
+        if (variableTree instanceof ArrayAccessTree arrayAccessTree) {
+          var www = arrayAccessTree.getExpression();
+          if (www instanceof IdentifierTree identifierTree) {
+            variable = identifierTree.getName().toString();
+          }
+        }
+
+        if (!localVars.contains(variable)) {
+          errors.add("Should be annotated because it calls a impure function");
+        }
       }
     }
 

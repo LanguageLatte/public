@@ -4,7 +4,10 @@ import com.google.errorprone.CompilationTestHelper;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
+@RunWith(JUnit4.class)
 public class SideEffectTest {
   @Test
   public void callsImpureFunction() {
@@ -171,6 +174,40 @@ public class SideEffectTest {
   }
 
   @Test
+  public void mutatesMethodParameterArray() {
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
+        .addSourceLines(
+            "TestClass.java",
+            "package com.languagelatte.annotated;",
+            "import java.util.List;",
+            "public class TestClass {",
+            "   // BUG: Diagnostic contains: Method should be annotated because it calls a impure function",
+            "   public void f1(String[] array) {",
+            "       array[0] = \"this is a side effect\";",
+            "   }",
+            "}")
+        .doTest();
+  }
+
+  @Test
+  public void mutatesLocalArray() {
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
+        .addSourceLines(
+            "TestClass.java",
+            "package com.languagelatte.annotated;",
+            "import java.util.List;",
+            "public class TestClass {",
+            "   public void f1() {",
+            "       String[] array = new String[1];",
+            "       array[0] = \"this is a side effect\";",
+            "   }",
+            "}")
+        .doTest();
+  }
+
+  @Test
   public void mutatesClassList() {
     makeCompilationTestHelperWithArgs(
             Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
@@ -220,7 +257,9 @@ public class SideEffectTest {
   @Test
   public void usesClassVariableThatIsImpure() {
     makeCompilationTestHelperWithArgs(
-            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
+            Arrays.asList(
+                "-XepOpt:NullAway:AnnotatedPackages=com.mike ",
+                "-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
         .addSourceLines(
             "TestClass.java",
             "package com.languagelatte.annotated;",
@@ -233,6 +272,10 @@ public class SideEffectTest {
             "   }",
             "}")
         .doTest();
+  }
+
+  public void f1(String[] a) {
+    a[0] = "this is a side effect";
   }
 
   // TODO - Test fails.

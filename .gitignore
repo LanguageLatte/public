@@ -35,6 +35,12 @@ replay_pid*
 *.project
 *.classpath
 *.factorypath
+**/.vscode
+
+
+# MacOS
+**/.DS_Store
+
 
 
 
