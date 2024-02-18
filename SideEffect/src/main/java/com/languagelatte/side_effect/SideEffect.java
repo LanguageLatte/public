@@ -15,10 +15,16 @@ import com.google.errorprone.util.ASTHelpers;
 import com.languagelatte.side_effect.third_party_code_matchers.All;
 import com.sun.source.tree.ArrayAccessTree;
 import com.sun.source.tree.AssignmentTree;
+import com.sun.source.tree.BinaryTree;
+import com.sun.source.tree.BlockTree;
 import com.sun.source.tree.ClassTree;
+import com.sun.source.tree.DoWhileLoopTree;
+import com.sun.source.tree.EnhancedForLoopTree;
 import com.sun.source.tree.ExpressionStatementTree;
 import com.sun.source.tree.ExpressionTree;
+import com.sun.source.tree.ForLoopTree;
 import com.sun.source.tree.IdentifierTree;
+import com.sun.source.tree.IfTree;
 import com.sun.source.tree.MemberSelectTree;
 import com.sun.source.tree.MethodInvocationTree;
 import com.sun.source.tree.MethodTree;
@@ -27,6 +33,7 @@ import com.sun.source.tree.StatementTree;
 import com.sun.source.tree.Tree;
 import com.sun.source.tree.Tree.Kind;
 import com.sun.source.tree.VariableTree;
+import com.sun.source.tree.WhileLoopTree;
 import com.sun.tools.javac.code.Symbol;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -51,6 +58,76 @@ public final class SideEffect extends BugChecker implements MethodTreeMatcher, C
   @Inject
   public SideEffect(ErrorProneFlags flags) {
     this.config = new Config(flags.getFlagsMap());
+  }
+
+  private void handleStatementTree(
+      StatementTree stmt, VisitorState state, List<String> errors, Set<String> localVars) {
+    if (state == null) {
+      return;
+    }
+    var kind = stmt.getKind();
+    if (stmt instanceof VariableTree vt) {
+      localVars.add(vt.getName().toString());
+      ExpressionTree aaa = vt.getInitializer();
+      errors.addAll(evaluateExpressionTree(aaa, state, localVars));
+
+    } else if (stmt instanceof ReturnTree rt) {
+      ExpressionTree aaa = rt.getExpression();
+      if (aaa == null) {
+        return;
+      }
+      var kind2 = aaa.getKind();
+      errors.addAll(evaluateExpressionTree(aaa, state, localVars));
+
+    } else if (stmt instanceof ExpressionStatementTree et) {
+      ExpressionTree aaa = et.getExpression();
+      errors.addAll(evaluateExpressionTree(aaa, state, localVars));
+    } else if (stmt instanceof ForLoopTree forLoopTree) {
+      var s = forLoopTree.getStatement();
+      if (s instanceof BlockTree blockTree) {
+        for (var abc : blockTree.getStatements()) {
+          handleStatementTree(abc, state, errors, localVars);
+        }
+      }
+    } else if (stmt instanceof IfTree ifTree) {
+      var a = ifTree.getThenStatement();
+      var b = ifTree.getElseStatement();
+
+      if (a instanceof BlockTree blockTree) {
+        for (var abc : blockTree.getStatements()) {
+          handleStatementTree(abc, state, errors, localVars);
+        }
+      }
+      if (b instanceof BlockTree blockTree) {
+        for (var abc : blockTree.getStatements()) {
+          handleStatementTree(abc, state, errors, localVars);
+        }
+      }
+    } else if (stmt instanceof WhileLoopTree whileLoopTree) {
+      var s = whileLoopTree.getStatement();
+      if (s instanceof BlockTree blockTree) {
+        for (var abc : blockTree.getStatements()) {
+          handleStatementTree(abc, state, errors, localVars);
+        }
+      }
+    } else if (stmt instanceof DoWhileLoopTree doWhileLoopTree) {
+      var s = doWhileLoopTree.getStatement();
+      if (s instanceof BlockTree blockTree) {
+        for (var abc : blockTree.getStatements()) {
+          handleStatementTree(abc, state, errors, localVars);
+        }
+      }
+    } else if (stmt instanceof EnhancedForLoopTree enhancedForLoopTree) {
+      var s = enhancedForLoopTree.getStatement();
+      if (s instanceof BlockTree blockTree) {
+        for (var abc : blockTree.getStatements()) {
+          handleStatementTree(abc, state, errors, localVars);
+        }
+      }
+    } else if (stmt instanceof BinaryTree binaryTree) {
+      errors.addAll(evaluateExpressionTree(binaryTree.getLeftOperand(), state, localVars));
+      errors.addAll(evaluateExpressionTree(binaryTree.getRightOperand(), state, localVars));
+    }
   }
 
   @Override
@@ -79,21 +156,7 @@ public final class SideEffect extends BugChecker implements MethodTreeMatcher, C
 
     if (tree.getBody() != null) {
       for (StatementTree stmt : tree.getBody().getStatements()) {
-        var kind = stmt.getKind();
-        if (stmt instanceof VariableTree vt) {
-          localVars.add(vt.getName().toString());
-          ExpressionTree aaa = vt.getInitializer();
-          errors.addAll(evaluateExpressionTree(aaa, state, localVars));
-
-        } else if (stmt instanceof ReturnTree rt) {
-          ExpressionTree aaa = rt.getExpression();
-          var kind2 = aaa.getKind();
-          errors.addAll(evaluateExpressionTree(aaa, state, localVars));
-
-        } else if (stmt instanceof ExpressionStatementTree et) {
-          ExpressionTree aaa = et.getExpression();
-          errors.addAll(evaluateExpressionTree(aaa, state, localVars));
-        }
+        handleStatementTree(stmt, state, errors, localVars);
       }
     }
 

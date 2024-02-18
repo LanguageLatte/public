@@ -27,6 +27,25 @@ public class SideEffectTest {
   }
 
   @Test
+  public void callsImpureFunctionInForLoop() {
+    makeCompilationTestHelperWithArgs(
+            Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
+        .addSourceLines(
+            "TestClass.java",
+            "package com.languagelatte.annotated;",
+            "public class TestClass {",
+            "   // BUG: Diagnostic contains: Method should be annotated because it calls a impure function",
+            "   public void f1() {",
+            "       for (int x = 0; x< 10; x++) {",
+            "           double w = Math.random(); ",
+            "       }",
+            "       return;",
+            "   }",
+            "}")
+        .doTest();
+  }
+
+  @Test
   public void callsImpureFunction2() {
     makeCompilationTestHelperWithArgs(
             Arrays.asList("-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
@@ -278,23 +297,26 @@ public class SideEffectTest {
     a[0] = "this is a side effect";
   }
 
-  // TODO - Test fails.
-  //   @Test
-  //   public void usesClassVariableThatIsImpure2() {
-  //     helper
-  //         .addSourceLines(
-  //             "TestClass.java",
-  //             "import com.languagelatte.side_effect.annotations.SideEffect;",
-  //             "public class TestClass {",
-  //             "   @SideEffect double x = Math.random();",
-  //             "   // BUG: Diagnostic contains: Method should be annotated because it calls a
-  // impure function",
-  //             "   public double f1() {",
-  //             "       return 10.0 + this.x;",
-  //             "   }",
-  //             "}")
-  //         .doTest();
-  //   }
+  // @Test
+  // public void usesClassVariableThatIsImpure2() {
+  //     makeCompilationTestHelperWithArgs(
+  //         Arrays.asList(
+  //             "-XepOpt:NullAway:AnnotatedPackages=com.mike ",
+  //             "-XepOpt:SideEffect:AnnotatedPackages=com.languagelatte"))
+  //       .addSourceLines(
+  //           "TestClass.java",
+  //           "package com.languagelatte.annotated;",
+  //           "import com.languagelatte.side_effect.annotations.SideEffect;",
+  //           "public class TestClass {",
+  //           "   @SideEffect double x = Math.random();",
+  //           "   // BUG: Diagnostic contains: Method should be annotated because it calls a impure
+  // function",
+  //           "   public double f1() {",
+  //           "       return 10.0 + this.x;",
+  //           "   }",
+  //           "}")
+  //       .doTest();
+  // }
 
   public CompilationTestHelper makeCompilationTestHelperWithArgs(List<String> args) {
     return CompilationTestHelper.newInstance(SideEffect.class, getClass()).setArgs(args);
