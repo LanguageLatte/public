@@ -60,74 +60,21 @@ public final class SideEffect extends BugChecker implements MethodTreeMatcher, C
     this.config = new Config(flags.getFlagsMap());
   }
 
-  private void handleStatementTree(
-      StatementTree stmt, VisitorState state, List<String> errors, Set<String> localVars) {
-    if (state == null) {
-      return;
+  private List<String> handleTree(Tree tree, VisitorState state, Set<String> localVars) {
+    if (tree == null) {
+      return List.of();
     }
-    var kind = stmt.getKind();
-    if (stmt instanceof VariableTree vt) {
-      localVars.add(vt.getName().toString());
-      ExpressionTree aaa = vt.getInitializer();
-      errors.addAll(evaluateExpressionTree(aaa, state, localVars));
 
-    } else if (stmt instanceof ReturnTree rt) {
-      ExpressionTree aaa = rt.getExpression();
-      if (aaa == null) {
-        return;
-      }
-      var kind2 = aaa.getKind();
-      errors.addAll(evaluateExpressionTree(aaa, state, localVars));
+    List<String> errors = new ArrayList<>();
+    List<String> newLocalVars = new ArrayList<>();
 
-    } else if (stmt instanceof ExpressionStatementTree et) {
-      ExpressionTree aaa = et.getExpression();
-      errors.addAll(evaluateExpressionTree(aaa, state, localVars));
-    } else if (stmt instanceof ForLoopTree forLoopTree) {
-      var s = forLoopTree.getStatement();
-      if (s instanceof BlockTree blockTree) {
-        for (var abc : blockTree.getStatements()) {
-          handleStatementTree(abc, state, errors, localVars);
-        }
-      }
-    } else if (stmt instanceof IfTree ifTree) {
-      var a = ifTree.getThenStatement();
-      var b = ifTree.getElseStatement();
-
-      if (a instanceof BlockTree blockTree) {
-        for (var abc : blockTree.getStatements()) {
-          handleStatementTree(abc, state, errors, localVars);
-        }
-      }
-      if (b instanceof BlockTree blockTree) {
-        for (var abc : blockTree.getStatements()) {
-          handleStatementTree(abc, state, errors, localVars);
-        }
-      }
-    } else if (stmt instanceof WhileLoopTree whileLoopTree) {
-      var s = whileLoopTree.getStatement();
-      if (s instanceof BlockTree blockTree) {
-        for (var abc : blockTree.getStatements()) {
-          handleStatementTree(abc, state, errors, localVars);
-        }
-      }
-    } else if (stmt instanceof DoWhileLoopTree doWhileLoopTree) {
-      var s = doWhileLoopTree.getStatement();
-      if (s instanceof BlockTree blockTree) {
-        for (var abc : blockTree.getStatements()) {
-          handleStatementTree(abc, state, errors, localVars);
-        }
-      }
-    } else if (stmt instanceof EnhancedForLoopTree enhancedForLoopTree) {
-      var s = enhancedForLoopTree.getStatement();
-      if (s instanceof BlockTree blockTree) {
-        for (var abc : blockTree.getStatements()) {
-          handleStatementTree(abc, state, errors, localVars);
-        }
-      }
-    } else if (stmt instanceof BinaryTree binaryTree) {
-      errors.addAll(evaluateExpressionTree(binaryTree.getLeftOperand(), state, localVars));
-      errors.addAll(evaluateExpressionTree(binaryTree.getRightOperand(), state, localVars));
-    }
+    return switch (tree) {
+      case MemberSelectTree t -> handleMemberSelectTree(t, state, localVars);
+      case AssignmentTree t -> handleAssignmentTree(t, state, localVars);
+      case MethodInvocationTree t -> handleMethodInvocationTree(t, state, localVars);
+      case StatementTree t -> handleStatementTree(t, state, localVars);
+      default -> List.of();
+    };
   }
 
   @Override
@@ -156,7 +103,7 @@ public final class SideEffect extends BugChecker implements MethodTreeMatcher, C
 
     if (tree.getBody() != null) {
       for (StatementTree stmt : tree.getBody().getStatements()) {
-        handleStatementTree(stmt, state, errors, localVars);
+        errors.addAll(handleTree(stmt, state, localVars));
       }
     }
 
@@ -188,7 +135,7 @@ public final class SideEffect extends BugChecker implements MethodTreeMatcher, C
           continue;
         }
 
-        errors.addAll(evaluateExpressionTree(vt.getInitializer(), state, localVars));
+        errors.addAll(handleTree(vt.getInitializer(), state, localVars));
         if (!errors.isEmpty()) {
           return buildDescription(vt).build();
         }
@@ -198,78 +145,166 @@ public final class SideEffect extends BugChecker implements MethodTreeMatcher, C
     return Description.NO_MATCH;
   }
 
-  private List<String> evaluateExpressionTree(
-      ExpressionTree expressionTree, VisitorState state, Set<String> localVars) {
+  private boolean shouldAnalyze(Symbol sym) {
+    var packageName = ASTHelpers.enclosingPackage(sym).getQualifiedName().toString();
 
-    List<String> errors = new ArrayList<>();
-    if (expressionTree == null) {
-      return errors;
+    if (this.config.isUnAnnotatedPackage(packageName)) {
+      return false;
+    } else if (this.config.isAnnotatedPackage(packageName)) {
+      return true;
     }
 
-    var kind = expressionTree.getKind();
+    return false;
+  }
 
-    if (expressionTree instanceof MethodInvocationTree methodInvocationTree) {
-      var a = methodInvocationTree.getMethodSelect();
-      String variable = "";
-      if (a instanceof MemberSelectTree memberSelectTree) {
-        var mstExpressionTree = memberSelectTree.getExpression();
+  // =================================================================================================
+  // =================================================================================================
+  // =================================================================================================
+  // =================================================================================================
 
-        if (mstExpressionTree instanceof IdentifierTree identifierTree) {
+  private List<String> handleMemberSelectTree(
+      MemberSelectTree tree, VisitorState state, Set<String> localVars) {
+
+    List<String> errors = new ArrayList<>();
+    List<String> newLocalVars = new ArrayList<>();
+
+    if (ASTHelpers.hasAnnotation(
+        ASTHelpers.getSymbol(tree),
+        "com.languagelatte.side_effect.annotations.SideEffect",
+        state)) {
+      errors.add("Should be annotated because it calls a impure function");
+    }
+
+    return errors;
+  }
+
+  private List<String> handleMethodInvocationTree(
+      MethodInvocationTree tree, VisitorState state, Set<String> localVars) {
+
+    List<String> errors = new ArrayList<>();
+    List<String> newLocalVars = new ArrayList<>();
+
+    var a = tree.getMethodSelect();
+    String variable = "";
+    if (a instanceof MemberSelectTree memberSelectTree) {
+      var mstExpressionTree = memberSelectTree.getExpression();
+
+      if (mstExpressionTree instanceof IdentifierTree identifierTree) {
+        variable = identifierTree.getName().toString();
+      }
+    }
+
+    if (ASTHelpers.hasAnnotation(
+        ASTHelpers.getSymbol(tree),
+        "com.languagelatte.side_effect.annotations.SideEffect",
+        state)) {
+      errors.add("Should be annotated because it calls a impure function");
+    } else if (All.ALL_KNOWN_THIRD_PARTY_IMPURE_METHODS.matches(tree, state)) {
+      errors.add("Should be annotated because it calls a impure function");
+    } else if (!localVars.contains(variable)
+        && All.ALL_KNOWN_THIRD_PARTY_CONTEXT_DEPENDENT_IMPURE_METHODS.matches(tree, state)) {
+      errors.add("Should be annotated because it calls a impure function");
+    }
+
+    return errors;
+  }
+
+  private List<String> handleAssignmentTree(
+      AssignmentTree tree, VisitorState state, Set<String> localVars) {
+
+    List<String> errors = new ArrayList<>();
+    List<String> newLocalVars = new ArrayList<>();
+
+    String variable = "";
+    var variableTree = tree.getVariable();
+    if (variableTree.getKind() == Kind.ARRAY_ACCESS) {
+
+      if (variableTree instanceof ArrayAccessTree arrayAccessTree) {
+        var www = arrayAccessTree.getExpression();
+        if (www instanceof IdentifierTree identifierTree) {
           variable = identifierTree.getName().toString();
         }
       }
 
-      if (ASTHelpers.hasAnnotation(
-          ASTHelpers.getSymbol(methodInvocationTree),
-          "com.languagelatte.side_effect.annotations.SideEffect",
-          state)) {
+      if (!localVars.contains(variable)) {
         errors.add("Should be annotated because it calls a impure function");
-      } else if (All.ALL_KNOWN_THIRD_PARTY_IMPURE_METHODS.matches(methodInvocationTree, state)) {
-        errors.add("Should be annotated because it calls a impure function");
-      } else if (!localVars.contains(variable)
-          && All.ALL_KNOWN_THIRD_PARTY_CONTEXT_DEPENDENT_IMPURE_METHODS.matches(
-              methodInvocationTree, state)) {
-        errors.add("Should be annotated because it calls a impure function");
-      }
-    } else if (expressionTree instanceof MemberSelectTree memberSelectTree) {
-      if (ASTHelpers.hasAnnotation(
-          ASTHelpers.getSymbol(memberSelectTree),
-          "com.languagelatte.side_effect.annotations.SideEffect",
-          state)) {
-        errors.add("Should be annotated because it calls a impure function");
-      }
-    } else if (expressionTree instanceof AssignmentTree assignmentTree) {
-      String variable = "";
-      var variableTree = assignmentTree.getVariable();
-      if (variableTree.getKind() == Kind.ARRAY_ACCESS) {
-
-        if (variableTree instanceof ArrayAccessTree arrayAccessTree) {
-          var www = arrayAccessTree.getExpression();
-          if (www instanceof IdentifierTree identifierTree) {
-            variable = identifierTree.getName().toString();
-          }
-        }
-
-        if (!localVars.contains(variable)) {
-          errors.add("Should be annotated because it calls a impure function");
-        }
       }
     }
 
     return errors;
   }
 
-  private boolean shouldAnalyze(Symbol sym) {
-    var packageName = ASTHelpers.enclosingPackage(sym).getQualifiedName().toString();
+  private List<String> handleStatementTree(
+      StatementTree stmt, VisitorState state, Set<String> localVars) {
 
-    if (this.config.isUnAnnotatedPackage(packageName)) {
-      return false;
+    List<String> errors = new ArrayList<>();
+    if (state == null) {
+      return errors;
     }
 
-    if (this.config.isAnnotatedPackage(packageName)) {
-      return true;
+    if (stmt instanceof VariableTree vt) {
+      localVars.add(vt.getName().toString());
+      ExpressionTree aaa = vt.getInitializer();
+      errors.addAll(handleTree(aaa, state, localVars));
+
+    } else if (stmt instanceof ReturnTree rt) {
+      ExpressionTree aaa = rt.getExpression();
+      if (aaa == null) {
+        return errors;
+      }
+      var kind2 = aaa.getKind();
+      errors.addAll(handleTree(aaa, state, localVars));
+
+    } else if (stmt instanceof ExpressionStatementTree et) {
+      ExpressionTree aaa = et.getExpression();
+      errors.addAll(handleTree(aaa, state, localVars));
+    } else if (stmt instanceof ForLoopTree forLoopTree) {
+      var s = forLoopTree.getStatement();
+      if (s instanceof BlockTree blockTree) {
+        for (var abc : blockTree.getStatements()) {
+          errors.addAll(handleTree(abc, state, localVars));
+        }
+      }
+    } else if (stmt instanceof IfTree ifTree) {
+      var a = ifTree.getThenStatement();
+      var b = ifTree.getElseStatement();
+
+      if (a instanceof BlockTree blockTree) {
+        for (var abc : blockTree.getStatements()) {
+          errors.addAll(handleTree(abc, state, localVars));
+        }
+      }
+      if (b instanceof BlockTree blockTree) {
+        for (var abc : blockTree.getStatements()) {
+          errors.addAll(handleTree(abc, state, localVars));
+        }
+      }
+    } else if (stmt instanceof WhileLoopTree whileLoopTree) {
+      var s = whileLoopTree.getStatement();
+      if (s instanceof BlockTree blockTree) {
+        for (var abc : blockTree.getStatements()) {
+          errors.addAll(handleTree(abc, state, localVars));
+        }
+      }
+    } else if (stmt instanceof DoWhileLoopTree doWhileLoopTree) {
+      var s = doWhileLoopTree.getStatement();
+      if (s instanceof BlockTree blockTree) {
+        for (var abc : blockTree.getStatements()) {
+          errors.addAll(handleTree(abc, state, localVars));
+        }
+      }
+    } else if (stmt instanceof EnhancedForLoopTree enhancedForLoopTree) {
+      var s = enhancedForLoopTree.getStatement();
+      if (s instanceof BlockTree blockTree) {
+        for (var abc : blockTree.getStatements()) {
+          errors.addAll(handleTree(abc, state, localVars));
+        }
+      }
+    } else if (stmt instanceof BinaryTree binaryTree) {
+      errors.addAll(handleTree(binaryTree.getLeftOperand(), state, localVars));
+      errors.addAll(handleTree(binaryTree.getRightOperand(), state, localVars));
     }
 
-    return false;
+    return errors;
   }
 }

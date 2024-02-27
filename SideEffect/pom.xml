@@ -28,8 +28,7 @@
     </developers>
 
     <properties>
-        <!-- <release>17</release> -->
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <argLine.xmx>1024m</argLine.xmx>
         <formatter.goal>format</formatter.goal>
@@ -96,8 +95,8 @@
                         <arg>-Xplugin:ErrorProne -Xep:NullAway:ERROR -XepOpt:NullAway:AnnotatedPackages=com.languagelatte</arg>
                     </compilerArgs>
                     <parameters>true</parameters>
-                    <source>17</source>
-                    <target>17</target>
+                    <source>21</source>
+                    <target>21</target>
                     <useIncrementalCompilation>false</useIncrementalCompilation>
                 </configuration>
             </plugin>
