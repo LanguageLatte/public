@@ -64,7 +64,7 @@
                         <path>
                             <groupId>com.uber.nullaway</groupId>
                             <artifactId>nullaway</artifactId>
-                            <version>0.10.19</version>
+                            <version>0.10.25</version>
                         </path>
                         <path>
                             <groupId>com.google.auto.service</groupId>
