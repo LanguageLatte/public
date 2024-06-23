@@ -13,7 +13,7 @@ Join us in celebrating the strides humanity is making towards a better and more 
 ## 2020s <a name="2020s"></a>
 
 * [2024 - Global - RMI - The Rise of Batteries in Six Charts](https://rmi.org/the-rise-of-batteries-in-six-charts-and-not-too-many-numbers/) 
-* [2024 - Glo- bal - RMI - The Cleantech Revolution: It’s exponential, disruptive, and now](https://rmi.org/wp-content/uploads/dlm_uploads/2024/06/RMI-Cleantech-Revolution-pdf.pdf)
+* [2024 - Global - RMI - The Cleantech Revolution: It’s exponential, disruptive, and now](https://rmi.org/wp-content/uploads/dlm_uploads/2024/06/RMI-Cleantech-Revolution-pdf.pdf)
 * [2024 - USA - EIA Solar and battery storage to make up 81% of new U.S. electric-generating capacity in 2024](https://www.eia.gov/todayinenergy/detail.php?id=61424)
 * [2024 - USA - EIA Solar and wind to lead growth of U.S. power generation for the next two years](https://www.eia.gov/todayinenergy/detail.php?id=61242)
 * [2024 - USA - EIA U.S. battery storage capacity expected to nearly double in 2024](https://www.eia.gov/todayinenergy/detail.php?id=61202)
