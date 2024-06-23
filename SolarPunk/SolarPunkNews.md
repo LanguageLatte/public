@@ -23,10 +23,13 @@ Join us in celebrating the strides humanity is making towards a better and more 
 * [2024 - Global - Tesla Model Y Is The World's Best-Selling Vehicle For 2023](https://www.motor1.com/news/706258/tesla-model-y-worlds-top-selling-vehicle-2023/)
 * [2023 - USA - EIA Renewable generation surpassed coal and nuclear in the U.S. electric power sector in 2022](https://www.eia.gov/todayinenergy/detail.php?id=61107)
 * [2023 - Global - Rystadenergy - Fossil fuel emissions to peak within two years](https://www.rystadenergy.com/news/fossil-fuel-emissions-to-peak-within-two-years-as-global-decarbonization-picks-up)
-* [2023 - IEA - World Energy Outlook 2022](https://www.iea.org/reports/world-energy-outlook-2023)
-* [2022 - IEA - World Energy Outlook 2022](https://www.iea.org/reports/world-energy-outlook-2022)
-* [2021 - IEA - World Energy Outlook 2021](https://www.iea.org/reports/world-energy-outlook-2021)
-* [2020 - IEA - World Energy Outlook 2020](https://www.iea.org/reports/world-energy-outlook-2020)
+* [2023 - Global - IEA - World Energy Outlook 2022](https://www.iea.org/reports/world-energy-outlook-2023)
+* [2023 - Global - Lazard - LEVELIZED COST OF ENERGY+](https://www.lazard.com/research-insights/2023-levelized-cost-of-energyplus/)
+* [2022 - Global - IEA - World Energy Outlook 2022](https://www.iea.org/reports/world-energy-outlook-2022)
+* [2021 - Global - IEA - World Energy Outlook 2021](https://www.iea.org/reports/world-energy-outlook-2021)
+* [2021 - Global - Lazard - LEVELIZED COST OF ENERGY+](https://www.lazard.com/research-insights/levelized-cost-of-energy-levelized-cost-of-storage-and-levelized-cost-of-hydrogen-2021/)
+* [2020 - Global - IEA - World Energy Outlook 2020](https://www.iea.org/reports/world-energy-outlook-2020)
+* [2020 - Global - Lazard - LEVELIZED COST OF ENERGY+](https://www.lazard.com/research-insights/levelized-cost-of-energy-levelized-cost-of-storage-and-levelized-cost-of-hydrogen-2020/)
 
 
 ## Contributing <a name="contributing"></a>
