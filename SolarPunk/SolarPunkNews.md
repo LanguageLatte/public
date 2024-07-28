@@ -1,8 +1,13 @@
 # SolarPunk News
-A curated list dedicated to highlighting positive and tangible advancements in various fields, including climate action, environmental sustainability, and other groundbreaking innovations across the board.
-Inspired by the optimistic spirit of "Star Trek: The Next Generation," the goal is to showcase real-world achievements and innovative solutions that are actively shaping a brighter, more sustainable future for our planet and society.
+SolarPunk encompases a whole host of views and ideals. 
+
+This is a curated list dedicated to highlighting positive and tangible advancements in various fields with a specific focus on energy, climate action and space exploration. Though other notable achievements are welcome.
+
+The goal is to showcase real-world achievements and innovative solutions that are actively shaping a brighter, more sustainable future for our planet and society.
+
 This collection is grounded in reality, focusing on verifiable progress.
-Join us in celebrating the strides humanity is making towards a better and more harmonious world.
+
+
 
 ## Table Of Contents
 1. [2020s](#2020s)
